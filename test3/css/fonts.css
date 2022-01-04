@@ -1,0 +1,25 @@
+/*
+https://www.dafont.com/biysk.font 
+https://www.creativefabrica.com/product/biysk/ref/144265/
+*/
+@font-face{
+    font-family: "Biysk";
+    src: url("../fonts/Biysk-Bold.ttf") format("truetype");
+  }
+
+
+
+/*Copyright 2011 The Quicksand Project Authors (https://github.com/andrew-paglinawan/QuicksandFamily), with Reserved Font Name “Quicksand”.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+http://scripts.sil.org/OFL
+-----------------------------------------------------------
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+-----------------------------------------------------------
+*/
+/*Font range 300->700*/
+@font-face{
+  font-family: "Quicksand";
+  src: url("../fonts/Quicksand-VariableFont_wght.ttf") format("truetype");
+}

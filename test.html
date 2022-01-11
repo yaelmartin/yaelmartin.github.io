@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<title> base html </title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/fonts.css">
+
+	<meta name="viewport" content="width=device-width">
+	
+	<!--          -->
+	
+</head>
+
+<body>
+    <!-- remonter en haut de tout-->
+    <div id="top>">
+    </div>
+
+
+    <header>
+    <!-- Espace utilisé         -->
+    <div class="header_used">
+
+        <!-- HEADER PC         -->
+        <div class="headerPC">
+            <div class="header_leftPC">
+                <a href="index.html" class="titlepolice">yaelmartin</a>
+            </div>
+
+            
+            <nav id="navbarPC">
+                <div class="header_right">
+                    <!-- placer la classe .current_page pour changer la couleur-->
+                    <a class="linksPC" href="index.html#CV">CV</a>
+                    <a class="linksPC" href="#work">Réalisations</a>
+                    <a class="linksPC" href="#about">À propos</a>
+                    <a class="linksPC" href="#contact">Contact</a>
+                </div>
+            </nav>
+        </div>
+
+
+        <!-- HEADER mobile         -->
+        <div class="headerMOBILE">
+            <div class="header_leftMOBILE">
+                <a href="index.html" class="titlepoliceMOBILE">yaelmartin</a>
+            </div>
+
+            <!-- Checkbox qui va servir pour afficher le menu en mode mobile
+            &#8801; pour faire l'icone
+              -->
+            <div class="header_rightMOBILE">
+                <label id="hamburger_icon" for="toggle-1">&#8801;</label>
+                <input type="checkbox" id="toggle-1">
+            
+
+                <nav>
+                    <div id="menu_deroulant">
+                        <!-- placer la classe .current_page pour changer la couleur-->
+                        <a class="linksMOBILE" href="#CV">CV</a>
+                        <a class="linksMOBILE" href="#work">Réalisations</a>
+                        <a class="linksMOBILE" href="#about">À propos</a>
+                        <a class="linksMOBILE" href="#contact">Contact</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+    </header>
+    <!-- pour corriger le header qui cache-->
+    <div class="header_spacing_fix"></div>
+
+
+    <div class="content">
+        <img src="placeholder/regle.jpg" alt="" width="100" height="1000">
+
+        
+        <section class="content partofpage accent_color1">
+    
+            <h1>Bonjour. Je suis Yaël Martin</h1>
+            <br>
+    
+            <h2>Comment j'ai découvert la photogrammetrie :</h2>
+
+            <br>
+            <!-- permet de ne pas cacher le liens pas le header-->
+            <a id="CV" class="anchor_fix1"></a>
+            <a class="" href="placeholder/sample.pdf" target="_blank">Mon CV à télécharger</a> 
+            <br>
+    
+            <img style="max-width: 900px;" class="responsive1" src="placeholder/image.jpg" alt="">
+            <p>
+                La dans ce premier paragraphe on voit des trucs incroyable<br>
+                C'est insane
+            </p>
+    
+        </section>
+        
+        <section class="partofpage accent_color0">
+            <h2>Faire des jolis sommaires</h2>
+            <p>Voilà des sommaires à copier coller</p>
+
+            
+            <ol id="sommaire1" type="I" class="sommaire">
+                <li>Fabrication
+                    <ol class="sommaire">
+                        <li class="s">Matériaux assemblages</li>
+                        <li class="s">Assemblage</li>
+                    </ol>
+                </li>
+                <li>Livraison
+                    <ol class="sommaire">
+                        <li class="sommaire">Transport palette</li>
+                        <li class="s">Camions</li>
+                        <li class="s">Camionnettes proches</li>
+                    </ol>
+                </li>
+
+            </ol>
+
+            
+        </section>
+
+        <section class="partofpage accent_color1">
+            <h2>Introduction</h2>
+            <figure>
+                <img style="max-width: 900px;" class="responsive1" src="placeholder/image.jpg" alt="">
+                <figcaption> <p>Fig.1 - Trulli, Puglia, Italy</p></figcaption>  
+            </figure>
+
+
+
+            <p>There are many<a class="link_classic" href="#top">test&nbsp;de&nbsp;lien</a>different criteria to be considered when choosing an Apple — size, color, firmness, sweetness, tartness...</p>
+        </section>
+        
+
+        <section class="partofpage accent_color2">
+            <img style="max-width: 600px;" class="responsive1" src="placeholder/image.jpg" alt="">
+            <img style="max-width: 600px;" class="responsive1" src="placeholder/image.jpg" alt="">
+            <img style="max-width: 600px;" class="responsive1" src="placeholder/image.jpg" alt="">
+            <img style="max-width: 600px;" class="responsive1" src="placeholder/image.jpg" alt="">
+        </section>
+
+        <section class="partofpage accent_color3">
+            <h2>Criteria</h2>
+            <p>There are many different criteria to be considered when choosing an Apple — size, color, firmness, sweetness, tartness...</p>
+        </section>
+
+    </div>
+
+   
+    <footer>
+        <div class="footer_used">
+            <a class="footer_links" href="#salut">Aller en haut</a>
+            <a class="footer_links" href="http://sketchfab.yaelmartin.com/">Scketchfab</a>
+            <a class="footer_links" href="">À propos de ce site</a>
+            <a class="footer_links" href="">Contact</a>
+        </div>
+
+    </footer>
+
+
+</body>
+
+</html>

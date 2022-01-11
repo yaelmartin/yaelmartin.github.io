@@ -1,0 +1,94 @@
+/* pour la grille des rubriques dans l'accueil
+c'est très artisanal */
+
+
+.realisations_grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+
+/*images utilisées */
+.icon_grid_portfolio1{
+    background-image: url("../icons/grid_portfolio/moteur1_3.jpg");
+}
+.icon_grid_portfolio2{
+    background-image: url("../icons/grid_portfolio/moteur1_3.jpg");
+}
+.icon_grid_portfolio3{
+    background-image: url("../icons/grid_portfolio/moteur1_3.jpg");
+}
+.icon_grid_portfolio4{
+    background-image: url("../icons/grid_portfolio/moteur1_3.jpg");
+}
+.icon_grid_portfolio5{
+    background-image: url("../icons/grid_portfolio/moteur1_3.jpg");
+}
+.icon_grid_portfolio6{
+    background-image: url("../icons/grid_portfolio/moteur1_3.jpg");
+}
+
+
+.icon_grid_portfolio1,
+.icon_grid_portfolio2,
+.icon_grid_portfolio3,
+.icon_grid_portfolio4,
+.icon_grid_portfolio5,
+.icon_grid_portfolio6{
+    background-image: url("../icons/grid_portfolio/moteur1_3.jpg");
+    background-position-x: center;
+    background-position-y: center;
+}
+
+
+.grid_portfolio{
+    background-size: cover;
+}
+
+.grid_portfolio_trans{
+
+    text-align: center;
+    line-height: 150px;
+    background-color: hsl(0, 0%, 0%,0.3);
+}
+
+.grid_portfolio_trans a{
+    display: inline-block;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: hsl(0, 0%, 0%,0.3);
+    color: lightgrey;
+    vertical-align: middle;
+    line-height: normal;
+    font-family:'Quicksand';
+    font-size:25px;
+    font-variation-settings: 'wght' 800;
+    text-decoration: none;
+    
+}
+
+.grid_portfolio_trans:hover{
+    background-color: hsl(210, 100%, 80%,0.0);
+    transition: all 0.2s ease-in-out;
+}
+
+.grid_portfolio_trans a:hover{
+    color: white;
+}
+
+/*en fonction de la taille du viewport, on fait d'afficher la grille par 3,2 ou 1*/
+
+
+@media only screen and (max-width: 600px) {
+    .realisations_grid{
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 850px) {
+    .realisations_grid{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -13,19 +13,19 @@ c'est très artisanal */
     background-image: url("../icons/grid_portfolio/moteur1_3.jpg");
 }
 .icon_grid_portfolio2{
-    background-image: url("../icons/grid_portfolio/moteur1_3.jpg");
+    background-image: url("../icons/grid_portfolio/timeline1.jpg");
 }
 .icon_grid_portfolio3{
-    background-image: url("../icons/grid_portfolio/moteur1_3.jpg");
+    background-image: url("../icons/grid_portfolio/htmlcss_icon.jpg");
 }
 .icon_grid_portfolio4{
-    background-image: url("../icons/grid_portfolio/moteur1_3.jpg");
+    background-image: url("../icons/grid_portfolio/virtualtour_ecole_high.jpg");
 }
 .icon_grid_portfolio5{
     background-image: url("../icons/grid_portfolio/moteur1_3.jpg");
 }
 .icon_grid_portfolio6{
-    background-image: url("../icons/grid_portfolio/moteur1_3.jpg");
+    background-image: url("../icons/grid_portfolio/solartree.jpeg");
 }
 
 
@@ -35,7 +35,6 @@ c'est très artisanal */
 .icon_grid_portfolio4,
 .icon_grid_portfolio5,
 .icon_grid_portfolio6{
-    background-image: url("../icons/grid_portfolio/moteur1_3.jpg");
     background-position-x: center;
     background-position-y: center;
 }
@@ -48,16 +47,24 @@ c'est très artisanal */
 .grid_portfolio_trans{
 
     text-align: center;
+    /*hauteur par default des rubriques */
     line-height: 150px;
-    background-color: hsl(0, 0%, 0%,0.3);
+    background-color: hsl(0, 0%, 0%,0.15);
+}
+
+.grid_portfolio_trans:hover{
+    background-color: hsl(210, 100%, 80%,0.0);
+    transition: all 0.1s ease-in-out;
 }
 
 .grid_portfolio_trans a{
     display: inline-block;
     border-radius: 5px;
     padding: 5px;
-    background-color: hsl(0, 0%, 0%,0.3);
-    color: lightgrey;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: hsl(0, 0%, 0%,0.7);
+    color: rgb(236, 236, 236);
     vertical-align: middle;
     line-height: normal;
     font-family:'Quicksand';
@@ -67,13 +74,10 @@ c'est très artisanal */
     
 }
 
-.grid_portfolio_trans:hover{
-    background-color: hsl(210, 100%, 80%,0.0);
-    transition: all 0.2s ease-in-out;
-}
-
-.grid_portfolio_trans a:hover{
+.grid_portfolio_trans:hover a{
+    background-color: hsl(0, 0%, 0%,0.9);
     color: white;
+    transition: all 0.1s ease-in-out;
 }
 
 /*en fonction de la taille du viewport, on fait d'afficher la grille par 3,2 ou 1*/
@@ -90,5 +94,11 @@ c'est très artisanal */
     .realisations_grid{
         display: grid;
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (min-width: 850px){
+    .grid_portfolio_trans{
+        line-height: 225px;
     }
 }

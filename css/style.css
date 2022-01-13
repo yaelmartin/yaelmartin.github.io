@@ -86,19 +86,19 @@ footer{
 /* accent color for part of the page */
 
 .accent_color1{
-    background-color: hsl(146, 24%, 74%);
+    background-color: hsl(145, 32%, 85%);
 }
 
 .accent_color2{
-    background-color: rgb(160, 170, 212);
+    background-color: rgb(241, 241, 212);
 }
 
 .accent_color3{
-    background-color: rgb(194, 172, 201);
+    background-color: rgb(233, 219, 235);
 }
 
 .accent_color4{
-    background-color: yellow;
+    background-color: rgb(236, 191, 183);
 }
 
 .link_classic,

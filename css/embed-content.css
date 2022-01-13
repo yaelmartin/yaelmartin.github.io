@@ -1,0 +1,58 @@
+/*en fonction de la taille du viewport, on fait change la taille de la frame*/
+
+
+.street-view-embed iframe,
+.sketchfab-embed-wrapper iframe,
+.youtube-embed iframe,
+.metasreal-tour-embed-wrapper iframe{
+    border: none;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+    .sketchfab-embed-wrapper iframe,
+    .street-view-embed iframe,
+    .youtube-embed iframe,
+    .metasreal-tour-embed-wrapper iframe{
+        width: 100%;
+        height: 300px;
+    }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 875px) {
+    .sketchfab-embed-wrapper,
+    .street-view-embed,
+    .metasreal-tour-embed-wrapper,
+    .youtube-embed{
+        text-align: center;
+     }
+
+    .sketchfab-embed-wrapper iframe,
+    .street-view-embed iframe,
+    .metasreal-tour-embed-wrapper iframe{
+        min-width: 600px;
+        height: 370px;
+     }
+
+     .youtube-embed iframe{
+        min-width: 600px;
+        height: 250px;
+     }
+}
+
+
+@media only screen and (min-width: 875px){
+    .sketchfab-embed-wrapper iframe,
+    .street-view-embed iframe,
+    .metasreal-tour-embed-wrapper iframe{
+        min-width: 800px;
+        height: 500px;
+    }
+
+    .youtube-embed iframe{
+        width: 854px;
+        height: 480px;
+    }
+
+}

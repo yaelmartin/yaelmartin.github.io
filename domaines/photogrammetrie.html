@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<title> base html </title>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="../css/sketchfab.css">
+
+	<meta name="viewport" content="width=device-width">
+	
+	<!--          -->
+	
+</head>
+
+<body>
+    <!-- remonter en haut de tout-->
+    <div id="top>">
+    </div>
+
+
+    <header>
+    <!-- Espace utilisé         -->
+    <div class="header_used">
+
+        <!-- HEADER PC         -->
+        <div class="headerPC">
+            <div class="header_leftPC">
+                <a href="../index.html" class="titlepolice">yaelmartin</a>
+            </div>
+
+            
+            <nav id="navbarPC">
+                <div class="header_right">
+                    <!-- placer la classe .current_page pour changer la couleur-->
+                    <a class="linksPC" href="../index.html#CV">CV</a>
+                    <a class="linksPC" href="../index.html#realisations">Réalisations</a>
+                    <a class="linksPC" href="../infos.html#a-propos">À propos</a>
+                    <a class="linksPC" href="../infos.html#contact">Contact</a>
+                </div>
+            </nav>
+        </div>
+
+
+        <!-- HEADER mobile         -->
+        <div class="headerMOBILE">
+            <div class="header_leftMOBILE">
+                <a href="../index.html" class="titlepoliceMOBILE">yaelmartin</a>
+            </div>
+
+            <!-- Checkbox qui va servir pour afficher le menu en mode mobile
+            &#8801; pour faire l'icone
+              -->
+            <div class="header_rightMOBILE">
+                <label id="hamburger_icon" for="toggle-1">&#8801;</label>
+                <input type="checkbox" id="toggle-1">
+            
+
+                <nav>
+                    <div id="menu_deroulant">
+                        <!-- placer la classe .current_page pour changer la couleur-->
+                        <a class="linksMOBILE" href="../index.html#CV">CV</a>
+                        <a class="linksMOBILE" href="../index.html#realisations">Réalisations</a>
+                        <a class="linksMOBILE" href="../infos.html#a-propos">À propos</a>
+                        <a class="linksMOBILE" href="../infos.html#contact">Contact</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+    </header>
+    <!-- pour corriger le header qui cache-->
+    <div class="header_spacing_fix"></div>
+
+
+
+    <!-- contenu de la page-->
+    <div class="content">
+
+        
+
+        <section class="partofpage accent_color1">
+
+            <h1>Photogrammétrie</h1>
+
+            <a id="ancre" class="anchor_fix1"></a>
+
+            <p>
+                La dans ce premier paragraphe on voit des trucs. incroyable<br>
+                C'est insane
+            </p>
+            <img style="max-width: 900px;" class="responsive1" src="../images/" alt="">
+    
+        </section>
+
+        <section class="partofpage accent_color3">
+            <a id="sommaire" class="anchor_fix1"></a>
+            <h2>Sommaire</h2>
+            <ol type="I" class="sommaire">
+                <li><a class="sommaire_link" href="#partieI">Inroduction</a>
+                    <ol type="i" class="sommaire-1">
+                        <li><a class="sommaire_link" href="#partieI1">Intro</a>
+                            <ol type="a" class="sommaire-2">
+                                <li><a class="sommaire_link" href="#partieI1a">Fabrication</a></li>
+                                <li><a class="sommaire_link" href="#partieI2b">Fabrication</a></li>
+                                <li><a class="sommaire_link" href="#partieI3c">Fabrication</a></li>
+                            </ol>
+                        </li>
+                        <li><a class="sommaire_link" href="#partieI2">Fabrication</a>
+                            <ol type="a" class="sommaire-2">
+                                <li><a class="sommaire_link" href="#partieI2a">Fabrication</a></li>
+                                <li><a class="sommaire_link" href="#partieI2b">Fabrication</a></li>
+                                <li><a class="sommaire_link" href="#partieI2c">Fabrication</a></li>
+                            </ol>
+                        </li>
+                        <li><a class="sommaire_link" href="#partieI3">Fabrication</a>
+                            <ol type="a" class="sommaire-2">
+                                <li><a class="sommaire_link" href="#partieI3a">Fabrication</a></li>
+                                <li><a class="sommaire_link" href="#partieI3b">Fabrication</a></li>
+                                <li><a class="sommaire_link" href="#partieI3c">Fabrication</a></li>
+                            </ol>    
+                        </li>
+                    </ol>
+                </li>
+                <li><a class="sommaire_link" href="#partieII">Test de nom de somaire très trop beaucoup long</a>
+                    <ol type="i" class="sommaire-1">
+                        <li><a class="sommaire_link" href="#partieII1">Fabrication</a>
+                            <ol type="a" class="sommaire-2">
+                                <li><a class="sommaire_link" href="#partieII1a">Fabrication</a></li>
+                                <li><a class="sommaire_link" href="#partieII2b">Fabrication</a></li>
+                                <li><a class="sommaire_link" href="#partieII3c">Fabrication</a></li>
+                            </ol>
+                        </li>
+                        <li><a class="sommaire_link" href="#partieI2">Fabrication</a>
+                            <ol type="a" class="sommaire-2">
+                                <li><a class="sommaire_link" href="#partieII2a">Fabrication</a></li>
+                                <li><a class="sommaire_link" href="#partieII2b">Fabrication</a></li>
+                                <li><a class="sommaire_link" href="#partieII2c">Fabrication</a></li>
+                            </ol>
+                        </li>
+                        <li><a class="sommaire_link" href="#partieI3">Fabrication</a>
+                            <ol type="a" class="sommaire-2">
+                                <li><a class="sommaire_link" href="#partieII3a">Fabrication</a></li>
+                                <li><a class="sommaire_link" href="#partieII3b">Fabrication</a></li>
+                                <li><a class="sommaire_link" href="#partieII3c">Fabrication</a></li>
+                            </ol>    
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+
+        </section>
+
+
+        <section class="partofpage accent_color2">
+            <a id="partieI" class="anchor_fix1"></a>
+            <h2>Introduction</h2>
+            <p>
+                La photogrammétrie permet d'obtenir une copie digitale d'un lieu ou d'un objet à partir d'une multitude de photos du sujet.
+                <br>
+                Vers fin 2017, je découvre la photogrammétrie avec la démo "The Lab" en réalité virtuelle.
+                <br>
+                Mes premiers scans en 2018 on été réalisés entièrement sur téléphone avec l'application <a class="classic_link" href="https://play.google.com/store/apps/details?id=com.lvonasek.arcore3dscanner&hl=en&gl=US">
+                3D Live Scanner</a>.
+                <br>
+                Puis j'ai appris à me servir d'<a class="classic_link" href="https://www.agisoft.com/" target="_blank">Agisoft Metashape</a>,
+                logicel avec lequel j'obtiens tous mes modèles.
+            </p>
+
+        
+        </section>
+
+        <section class="partogpage accent_color3">
+            <div class="sketchfab-embed-wrapper"> <iframe title="Elephant wooden statue" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/7910bc998d9b44bd8d760b55f0aef340/embed?dnt=1"> </iframe> </div>
+        </section>
+    </div>
+
+   
+    <footer>
+        <div class="footer_used">
+            <a class="footer_links" href="#top">Aller en haut</a>
+            <a class="footer_links" href="http://sketchfab.yaelmartin.com/">Scketchfab</a>
+            <a class="footer_links" href="https://www.youtube.com/channel/UCtfyZUGUJbWLgEb9ysf_APg/videos">Youtube</a>
+        </div>
+        <div class="footer_used">
+            <a class="footer_links" href="programmation_web-design.html#ce-site">À propos du site</a>
+            <a class="footer_links" href="https://www.linkedin.com/in/ya%C3%ABl-martin-ba314922b/">LinkedIn</a>
+            <a class="footer_links" href="../contact.html">Contact</a>
+        </div>
+
+    </footer>
+
+
+</body>
+
+</html>

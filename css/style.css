@@ -271,7 +271,7 @@ input[type=checkbox] {
     }
  
  /* Toggled State */
- input[type=checkbox]:checked ~ nav #menu_deroulant{
+#toggle-1:checked ~ nav #menu_deroulant{
     display: block;
 
  }

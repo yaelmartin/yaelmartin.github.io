@@ -1,0 +1,77 @@
+.big_button{
+    border-radius: 75px;
+    padding: 30px;
+    margin: 0 auto;
+    width: min(60%);
+    justify-content: normal;
+    text-align: center;
+}
+
+.big_button h2{
+    font-size: 32px;
+
+    font-weight: 700;
+}
+
+.container-baniere_index{
+    padding-top: 50px;
+}
+
+.index_bonjour{
+    background-color: #7a83ad;
+    
+}
+
+.index_cv{
+    background-color: #b8632b;
+    
+}
+
+.cv_link{
+    text-decoration: none;
+    color: rgb(233, 233, 233);
+    font-weight: 800;
+}
+
+.cv_link:hover{
+    color: rgb(255, 255, 255);
+}
+
+.mes-domaines{
+    background-color: rgb(107, 35, 103);
+    padding: 5px;
+    color: rgb(247, 229, 229);
+    width: 100%;
+    text-align: center;
+    font-size: xx-large;
+}
+
+.index_a-propos{
+    background-color: rgb(50, 14, 80);
+}
+
+.index_contacter{
+    background-color: rgb(19, 27, 63);
+}
+
+
+.mes-domaines,
+.index_bonjour,
+.cv_link,
+.index_contacter,
+.index_a-propos{
+    font-family:'Quicksand';
+}
+
+
+
+@media only screen and (max-width: 725px){
+    .big_button{
+        width: 100%;
+        border-radius: 0;
+        padding: 30px;
+        padding-left: 5px;
+        padding-right: 5px;
+        
+    }
+}

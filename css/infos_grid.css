@@ -6,20 +6,44 @@
     background-color: rgb(206, 206, 236);
 }
 
+.infos-contact-conainer{
+    margin: auto;
+    padding: 20px;
+    border-radius: 20px;
+    width: 70%;
+    background-color: rgb(233, 227, 196);
+}
 
-/*en fonction de la taille du viewport, on fait d'afficher la grille par 3,2 ou 1*/
+.infos_ul{
+    font-family:'Quicksand';
+}
+
+.infos-div-ul{
+    display: inline-block;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    vertical-align: top;
+}
+
+.infos-div-ul li{
+    margin-left: 2em;
+}
+
 
 
 @media only screen and (max-width: 600px) {
-    .infos_a-propos-container{
-        width: 95%;
+    .infos_a-propos-container,
+    .infos-contact-conainer{
+        width: 100%;
         border-radius: 0;
     }
 
 }
 
 @media only screen and (min-width: 600px) and (max-width: 850px) {
-    .infos_a-propos-container{
+    .infos_a-propos-container,
+    .infos-contact-conainer{
         width: 80%;
     }
 }
@@ -28,3 +52,4 @@
 
 
 }
+

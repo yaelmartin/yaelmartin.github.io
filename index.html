@@ -2,10 +2,15 @@
 <html lang="fr">
 <head>
 	<meta charset="utf-8">
-	<title> Portfolio </title>
+	<title> Yaël Martin Portfolio</title>
+
+    <meta name="author" content="Yaël MARTIN">
+    <meta name="description" content="Mon Portfolio Multimédia">
+
 	<link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/fonts.css">
     <link rel="stylesheet" type="text/css" href="css/realisations_grid.css">
+    <link rel="stylesheet" type="text/css" href="css/big-center.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 
 	<meta name="viewport" content="width=device-width">
@@ -80,25 +85,26 @@
     <!-- contenu de la page-->
     <div class="content">
 
-        <section class="partofpage accent_color1">
-    
-            <h1>Bonjour. Je suis Yaël Martin</h1>
-            <br>
-            <h2>Comment j'ai découvert la photogrammetrie :</h2>
+            <div class="banniere1 container-baniere_index" style="background-image: url('images/banieres/ciel.jpg');">
+                <div class="big_button index_bonjour">
+                    <h2>Bonjour.
+                        <br>Je suis Yaël&#8199;Martin et
+                         <br> j'aime digitaliser le&#8199;réel.
+                    </h2>
+                </div>
+                <div style="height: 50px;"></div>
 
-            <br>
-            <!-- permet de ne pas cacher le liens pas le header-->
-            <a id="CV" class="anchor_fix1"></a>
-            <h2><a class="link_classic" href="placeholder/sample.pdf" target="_blank">Mon CV à télécharger</a></h2>
-            <br>
+                <a id="CV" class="anchor_fix2"></a>
+                <div class="big_button index_cv">
+                    <h2><a class="cv_link" href="fichiers/Yael-Martin_CV.pdf" target="_blank">Mon CV à télécharger</a>
+                    </h2>
+                </div>
+
+                <div style="height: 75px;"></div>
+            </div>
+
+            <h2 class="mes-domaines">Mes domaines</h2>
     
-            <img style="max-width: 900px;" class="responsive1" src="placeholder/image.jpg" alt="">
-            <p>
-                La dans ce premier paragraphe on voit des trucs. incroyable<br>
-                C'est insane
-            </p>
-    
-        </section>
 
         <a id="realisations" class="anchor_fix2"></a>
         <div class="realisations_grid">
@@ -138,72 +144,24 @@
                 </div>
             </div>
         </div>
-        
-        
-        <section class="partofpage accent_color0">
-            <h2>Faire des jolis sommaires</h2>
-            <p>Voilà des sommaires à copier coller</p>
-        </section> 
-        
-        <section class="partofpage accent_color3">
-            <a id="sommaire" class="anchor_fix1"></a>
-            <h2>Sommaire</h2>
-            <ol type="I" class="sommaire">
-                <li><a class="sommaire_link" href="#partieI">Fabrication</a>
-                    <ol type="i" class="sommaire-1">
-                        <li><a class="sommaire_link" href="#partieI1">Fabrication</a>
-                            <ol type="a" class="sommaire-2">
-                                <li><a class="sommaire_link" href="#partieI1a">Fabrication</a></li>
-                                <li><a class="sommaire_link" href="#partieI2b">Fabrication</a></li>
-                                <li><a class="sommaire_link" href="#partieI3c">Fabrication</a></li>
-                            </ol>
-                        </li>
-                        <li><a class="sommaire_link" href="#partieI2">Fabrication</a>
-                            <ol type="a" class="sommaire-2">
-                                <li><a class="sommaire_link" href="#partieI2a">Fabrication</a></li>
-                                <li><a class="sommaire_link" href="#partieI2b">Fabrication</a></li>
-                                <li><a class="sommaire_link" href="#partieI2c">Fabrication</a></li>
-                            </ol>
-                        </li>
-                        <li><a class="sommaire_link" href="#partieI3">Fabrication</a>
-                            <ol type="a" class="sommaire-2">
-                                <li><a class="sommaire_link" href="#partieI3a">Fabrication</a></li>
-                                <li><a class="sommaire_link" href="#partieI3b">Fabrication</a></li>
-                                <li><a class="sommaire_link" href="#partieI3c">Fabrication</a></li>
-                            </ol>    
-                        </li>
-                    </ol>
-                </li>
-                <li><a class="sommaire_link" href="#partieII">Test de nom de somaire très trop beaucoup long</a>
-                    <ol type="i" class="sommaire-1">
-                        <li><a class="sommaire_link" href="#partieII1">Fabrication</a>
-                            <ol type="a" class="sommaire-2">
-                                <li><a class="sommaire_link" href="#partieII1a">Fabrication</a></li>
-                                <li><a class="sommaire_link" href="#partieII2b">Fabrication</a></li>
-                                <li><a class="sommaire_link" href="#partieII3c">Fabrication</a></li>
-                            </ol>
-                        </li>
-                        <li><a class="sommaire_link" href="#partieI2">Fabrication</a>
-                            <ol type="a" class="sommaire-2">
-                                <li><a class="sommaire_link" href="#partieII2a">Fabrication</a></li>
-                                <li><a class="sommaire_link" href="#partieII2b">Fabrication</a></li>
-                                <li><a class="sommaire_link" href="#partieII2c">Fabrication</a></li>
-                            </ol>
-                        </li>
-                        <li><a class="sommaire_link" href="#partieI3">Fabrication</a>
-                            <ol type="a" class="sommaire-2">
-                                <li><a class="sommaire_link" href="#partieII3a">Fabrication</a></li>
-                                <li><a class="sommaire_link" href="#partieII3b">Fabrication</a></li>
-                                <li><a class="sommaire_link" href="#partieII3c">Fabrication</a></li>
-                            </ol>    
-                        </li>
-                    </ol>
-                </li>
-            </ol>
-
-        </section>
 
 
+        
+        <div class="banniere1 container-baniere_index" style="background-image: url('images/banieres/ciel2.jpg');">
+            
+
+            <div class="big_button index_a-propos">
+                <h2><a class="cv_link" href="infos.html#a-propos">À propos de moi</a></h2>
+            </div>
+
+            <div style="height: 50px;"></div>
+            <div class="big_button index_contacter">
+                <h2><a class="cv_link" href="infos.html#contact">Me contacter</a></h2>
+                
+            </div>
+            <div style="height: 50px;"></div>
+
+        </div>
     </div>
 
    

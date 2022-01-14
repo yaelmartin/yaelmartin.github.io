@@ -1,6 +1,7 @@
 *{
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 
@@ -62,7 +63,7 @@ header,
 }
 /*couleur background #menu_deroulant*/
 #menu_deroulant{
-    background: #38504b;
+    background: #040b33;
 }
 
 /*FIN COULEURS HEADER*/
@@ -149,7 +150,7 @@ header{
 
 .header_spacing_fix{
     /*mettre une approximation de la hauteur du header PC*/
-    height: 39px;
+    height: 32px;
 }
 
 .header_used{
@@ -348,6 +349,7 @@ footer{
 }
 
 
+
 /* vu que j'ai tout changer les margin et padding, faut mettre ce code*/
 .sommaire{
     padding-left: 1.5em;
@@ -447,7 +449,7 @@ footer{
 
     .header_spacing_fix{
         /*mettre une approximation de la hauteur du header PC*/
-        height: 39px;
+        height: 32px;
     }
 
 
@@ -470,6 +472,10 @@ footer{
     */
     .anchor_fix1{
         top: -50px;
+    }
+
+    .anchor_fix2{
+        top: -100px;
     }
 
     .partofpage p{

@@ -370,6 +370,14 @@ footer{
     font-variation-settings: 'wght' 800;
 }
 
+.sommaire_link{
+    text-decoration: none;
+}
+
+.sommaire_link:hover{
+    text-decoration: underline;
+}
+
 
 
 /*une image responsive*/
@@ -400,8 +408,8 @@ footer{
 }
 
 .partofpage p{
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 25px;
+    margin-right: 25px;
     text-align: justify;
     font-variation-settings: 'wght' 550;
     font-family:'Quicksand';
@@ -465,8 +473,8 @@ footer{
     }
 
     .partofpage p{
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 18px;
+    margin-right: 18px;
     }
     .partofpage h1,
     .partofpage h2,
@@ -474,8 +482,8 @@ footer{
     .partofpage h4,
     .partofpage h5,
     .partofpage h6{
-        margin-left: 5px;
-        margin-right: 5px;
+        margin-left: 8px;
+        margin-right: 8px;
     }
 
 

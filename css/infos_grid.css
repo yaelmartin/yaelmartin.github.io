@@ -1,0 +1,30 @@
+.infos_a-propos-container{
+    margin: auto;
+    padding: 20px;
+    border-radius: 20px;
+    width: 70%;
+    background-color: rgb(206, 206, 236);
+}
+
+
+/*en fonction de la taille du viewport, on fait d'afficher la grille par 3,2 ou 1*/
+
+
+@media only screen and (max-width: 600px) {
+    .infos_a-propos-container{
+        width: 95%;
+        border-radius: 0;
+    }
+
+}
+
+@media only screen and (min-width: 600px) and (max-width: 850px) {
+    .infos_a-propos-container{
+        width: 80%;
+    }
+}
+
+@media only screen and (min-width: 850px){
+
+
+}

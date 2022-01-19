@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<title> Accessibilité web </title>
+
+    <meta name="author" content="Yael Martin / MMI1 TP1">
+
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/fonts.css">
+
+    <!-- Pour meilleure adaptation mobile-->
+	<meta name="viewport" content="width=device-width">
+</head>
+
+<body>
+	<!-- spécialisée -->
+    <!--
+    le sommaire et les exemples en bas de pages ne sont pas comptés dans les 500 mots.
+
+    en comptant les attributs alt="texte descriptif" => 466 mots
+    sans compter les atributs alt => 421 mots
+
+    Mots visibles sur un navigateur classique => 516
+
+    Total mot, avec alt => 561
+    -->
+    <div class="content">
+
+        <!-- Titre top-->
+        <h1>L'accessibilité web</h1>
+        <div style="height: 2em;"></div>
+
+        <!-- Sommaire -->
+        <ol type="I">
+            <li><a href="#p1">Enjeux de l'accessibilité web</a></li>
+            <li><a href="#p2">Atoûts de l'accessibilité</a></li>
+            <li><a href="#p3">Tester l'accessibilité de son site</a></li>
+            <li><a href="#p4">Améliorer l'accessibilité de son site</a></li>
+        </ol>
+
+        <!-- Vidéo youtube -->
+        <div style="height: 2em;"></div>
+        <iframe style="width: 80%; min-height: 350px; border: 0;" src="https://www.youtube-nocookie.com/embed/-ao_Kc_8rpE" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+        <!-- 1ère partie-->
+        <section id="p1"> 
+            <h2>Les enjeux de l’accessibilité Web</h2>
+
+            <p class="normal_p">
+                Depuis sa création, le web a vu ses utilisations s’élargir :
+                <br>
+                Il est de plus en plus utilisé, que ce soit pour s’informer, acheter, divertir, communiquer, ou réaliser des démarches administratives.
+                <br>
+                En ce sens, il est nécessaire de rendre accessible son utilisation.
+                <br>
+                Une mauvaise conception d'un site rend son utilisation difficile,
+                voire inutilisable pour les personnes aux fonctions physiques,
+                sensorielles, mentales, cognitives ou psychiques altérées.
+            </p>
+
+            <p class="normal_p">
+                Cela passe par la bonne utilisation de la sémantique html,
+                des couleurs contrastées, une mise en page claire, des options d’accessibilité telles que la 
+                possibilité de zoomer dans la page (Loupe), d’agrandir la police.
+            </p>
+
+            <p class="normal_p">
+                <b>La navigation :</b>
+                <br>
+                Par défaut, il est possible de parcourir tous les liens/checkboxes html avec la touche tab du clavier [Tab ↹],
+                et d'interagir avec eux avec "entrer" et "espace".
+                (Shift + Tab pour revenir en arrière)
+            </p>
+        </section>
+
+        <!-- 2ème partie-->
+        <section id="p2">
+            <h2>Une accessibilité qui profite à tous</h2>
+
+            <p class="normal_p">
+                L’ajout des méthodes alternatives de consommation du contenu,
+                <br>
+                comme les sous titres/transcription textuelle pour les vidéos et podcasts
+                n’est pas seulement bénéfique pour les malentendants,
+                mais aussi tout public qui souhaitent acquérir l'information
+                dans un lieu qui ne le permet pas (bibliothèque, lieu bruyant).
+                <br>
+                Si le site web est conçu de sorte qu’il puisse être utilisé sans être regardé,
+                alors il peut alors également bénéficier aux personnes qui ne souhaitent pas afficher les images
+                ou qui ont une bande passante limitée.
+            </p>
+
+            <p class="normal_p">
+                Une bonne accessibilité du web permet ainsi une meilleure égalité entre les individus,
+                et est bénéfique pour tous ses utilisateurs.
+            </p>
+        </section>
+
+        <!-- 3ème partie-->
+        <section  id="p3">
+            <h2>Évaluer l’accessibilité de son site :</h2>
+
+            <p class="normal_p">
+                Sur chrome la section “Lighthouse” des “options de développement"  [F12],
+                permet un diagnostic de son site selon différents critères de performance,
+                d’accessibilité et de référencement.
+            </p>
+            
+            <!-- image avec légende-->
+            <figure>
+                <img src="media/chrome_lighthouse1.png" style="max-width: 300px;" class="responsive1"
+                alt="Scores sur 100 : performance=69, accessibilité=88, meilleures pratiques=93, optimisation moteurs de recherche=77.">
+                <figcaption>Mon site web test dans sa version actuelle obtient un score modéré.</figcaption>
+            </figure>
+
+            <div style="height: 1.2em;"></div>
+            <p class="normal_p">
+                L’organisation Webaim établit aussi un benchmark d’accessibilité,
+                en
+                <a href="https://wave.webaim.org/" target="_blank">
+                ligne</a>
+                ou avec une 
+                <a href="https://chrome.google.com/webstore/detail/wave-evaluation-tool/jbbplnpkjmmeebjpijfedlgcdilocofh" target="_blank">
+                extension</a>.
+            </p>
+
+            <!-- seconde image avec légende-->
+            <figure>
+                <img src="media/webaim_1.png" style="max-width: 300px;" class="responsive1"
+                alt="Diagnostic de webaim, 34 alertes, 26 erreurs de contraste.">
+                <img src="media/webaim_2.png" style="max-width: 200px;" class="responsive1"
+                alt="Liens hypertextes bleus sur fond violet.">
+                <figcaption>Webaim indique que le texte et le fond ne sont pas assez contrastés</figcaption>
+            </figure>
+            <div style="height: 1em;"></div>
+
+        </section>
+
+        <!-- 4ème partie-->
+        <section  id="p4">
+            <h2>Des solutions pour améliorer l’accessibilité de son site :</h2>
+
+            <p class="normal_p">
+                Sites pour trouver des couleurs de police qui contrastent bien avec le fond
+                <br>
+                <a href="https://coolors.co/contrast-checker" target="_blank">coolors.co/contrast-checker</a>
+            </p>
+            <!-- texte cliquable-->
+            <label class="small_p" for="toggle-background_demo">Visualiser le problème en cochant la case au clavier ou à la souris :</label><input type="checkbox" id="toggle-background_demo">
+            <!-- demo texte interactif-->
+            <div class="background_demo1">
+                De plus pour une bonne lisibilité il faut que la couleur du texte contraste suffisamment avec le fond.
+            </div>
+
+            <div style="height: 2em;"></div>
+
+            <p class="normal_p">
+                Préférer des polices sans-serif et éviter celles trop fantaisies.
+            </p>
+            <!-- texte cliquable-->
+            <label class="small_p" for="toggle-font_demo">Visualiser le problème en cochant la case au clavier ou à la souris :</label><input type="checkbox" id="toggle-font_demo">
+            <!-- demo texte interactif-->
+            <div class="font_demo1">La lisibilité d'un texte sur une page web dépend de sa taille, mais aussi de la police utilisée.
+                <br> Les polices fantaisies doivent être utilisées avec précaution, car elles peuvent gêner la lecture.
+            </div>
+
+            <p class="normal_p">
+                <br>Il vaut également mieux spécifier "font-size" en utilisant "em" plutôt qu’une taille fixe en pixels,
+                pour améliorer la compatibilité avec le zoom de certains navigateurs.
+            </p>
+
+            <p class="normal_p">
+
+                Les attributs "alt" des images sont à remplir pour décrire le contenu visuel,
+                et l'utilisation de balises
+                <span id="describe-aria">
+                    <dfn aria-describedby="describe-aria">ARIA</dfn>+
+                    "Accessible Rich Internet Applications"
+                </span>
+                permettent de faciliter la navigation d'une personne utilisant un lecteur d'écran.
+            </p>
+
+            <!-- commentaire ARIA -->
+            <div aria-label="Ce texte est visible par les utilisateurs de lecteur d'écran uniquement.">
+                <p aria-hidden="true" class="small_p2">
+                    Il est possible de différencier le contenu ARIA et celui navigateur classique
+                </p>
+            </div>
+
+            <img src="media/aria_demo.png" style="max-width: 800px;" class="responsive1"
+            alt="Code html css utilisé pour ajouter du changer le texte entre le lecteur d'ecran et le navigateur classique.">
+
+            <div style="height: 8em;"></div>
+
+        </section>
+
+    </div>
+</body>
+</html>

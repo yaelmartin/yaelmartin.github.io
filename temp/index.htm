@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>Template Jeu</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="jeu.css"/>
+
+  
+  <script src="Sprite.js"></script>
+  <script src="Scene.js"></script>
+  <script src="GridPositioned.js"></script>
+  <script src="Animated.js"></script>
+  <script src="Player.js"></script>
+
+  <script src="RawMap.js"></script>
+  <script src="InputSystem.js"></script>
+  <script src="UserInterface.js"></script>
+  <script src="Benchmark.js"></script>
+
+  <script src="Jeu.js"></script>
+
+
+
+
+
+
+
+  <!-- Inclure ici les fichiers JavaScript necessaires a la scene. -->
+  <script>
+   let scene;
+
+   function load() {
+    scene = new Jeu(document.getElementById("scene")); 
+    scene.start();
+    scene.resize();
+   }
+  </script>
+ </head>
+ <body onload="load()" onresize="scene.resize()">
+  <div id="scene">
+   <!-- Definir ici les elements HTML qui seront manipules dans la scene. -->
+   
+   <!-- Le code ci-dessous permet affiche un bouton pour le plein ecran -->
+   <div id="fullscreen" style="z-index: 1000;" onmousedown="scene.toggleFullscreen(event);">F</div>
+  </div>
+ </body>
+</html>

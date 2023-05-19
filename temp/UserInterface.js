@@ -8,7 +8,7 @@ class UserInterface {
         this.jeu_.appendChild(this.background_);
         this.lifeBackgroundBox_ = new Sprite(document.createElement("img"));
         this.lifeBackgroundBox_.setXY(32, 384 + 16);
-        this.lifeBackgroundBox_.setImage("img/backgroundLife.png", 128, 64);
+        this.lifeBackgroundBox_.setImage("img/backgroundLife.png", 256, 64);
         this.jeu_.appendChild(this.lifeBackgroundBox_);
         this.lifeCurrentBox_ = new Sprite(document.createElement("img"));
         this.lifeCurrentBox_.setXY(32, 384 + 16);
@@ -25,7 +25,11 @@ class UserInterface {
         this.jeu_.appendChild(this.timerBox_);
     }
     setVisualLife(value) {
-        this.lifeCurrentBox_.setWidth(this.lifeBackgroundBox_.getWidth() * value);
+        let newWidth = this.lifeBackgroundBox_.getWidth() * value;
+        if (newWidth < 0) {
+            newWidth = 0;
+        }
+        this.lifeCurrentBox_.setWidth(newWidth);
     }
     clearFlowers() {
     }

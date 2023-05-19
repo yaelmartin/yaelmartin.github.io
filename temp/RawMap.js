@@ -23,11 +23,13 @@ class RawMap {
             ];
         this.playerSpawnX_ = 14;
         this.playerSpawnY_ = 1;
-        this.safeAreaX_ = 9;
+        this.safeAreaX_ = 10;
         this.safeAreaY_ = 0;
         this.safeAreaWidth_ = 10;
         this.safeAreaHeight_ = 12;
         this.safeAreaIsHorizontal_ = true;
-        this.safeAreaHorizontalSpeed_ = 1;
+        this.safeAreaMaxHorizontalSpeed_ = 0.02;
+        this.safeAreaAccelHorizontalSpeed_ = (-0.001);
+        this.backgroundImage_ = ["img/montain1.jpg"];
     }
 }

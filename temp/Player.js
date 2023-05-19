@@ -21,14 +21,13 @@ class Player extends Animated {
         this.newGridY_ = this.newGridY_ + 0.05;
         this.updateGridCollisionCoords();
         this.grounded_ = this.CheckCollisionsDown();
-        console.log(this.grounded_);
         this.newGridY_ = this.gridY_;
-        let arrowInputs = this.jeu_.correctedInputs;
+        let arrowInputs = this.jeu_.correctedInputs_;
         if (this.alwaysJumping) {
             arrowInputs[1] = true;
         }
         else {
-            if (!this.allowContinousJump) {
+            if (!this.allowContinousJumping) {
                 if (arrowInputs[1] == this.previousInputs[1]) {
                     arrowInputs[1] = false;
                 }
@@ -55,8 +54,8 @@ class Player extends Animated {
             else {
                 this.vx_ = this.vx_ - 0.01;
             }
-            if (this.vx_ < -this.terminalVelocityX_) {
-                this.vx_ = (-this.terminalVelocityX_);
+            if (this.vx_ < -this.maxVelocityX_) {
+                this.vx_ = (-this.maxVelocityX_);
             }
         }
         if (arrowInputs[3]) {
@@ -66,8 +65,8 @@ class Player extends Animated {
             else {
                 this.vx_ = this.vx_ + 0.01;
             }
-            if (Math.abs(this.vx_) > this.terminalVelocityX_) {
-                this.vx_ = this.terminalVelocityX_;
+            if (Math.abs(this.vx_) > this.maxVelocityX_) {
+                this.vx_ = this.maxVelocityX_;
             }
         }
         if (arrowInputs[1] && this.nearWallLeft_ && this.lastTimeWasNearWall && arrowInputs[2] && !this.grounded_) {
@@ -86,15 +85,13 @@ class Player extends Animated {
                 this.newGridY_ = this.gridY_ + this.vy_;
             }
             else {
-                console.log(this.vy_);
-                console.log("this shouldn't be possible Player.ts moveHope2");
                 this.vy_ = 0;
             }
         }
         else {
             this.vy_ = this.vy_ + this.gravity_;
-            if (this.vy_ > this.terminalVelocityY_) {
-                this.vy_ = this.terminalVelocityY_;
+            if (this.vy_ > this.fallingMaxVelocityY_) {
+                this.vy_ = this.fallingMaxVelocityY_;
             }
             this.newGridY_ = this.gridY_ + this.vy_;
         }
@@ -166,7 +163,7 @@ class Player extends Animated {
         this.updateGridCollisionCoords();
         this.grounded_ = this.CheckCollisionsDown();
         this.newGridY_ = this.gridY_;
-        const arrowInputs = this.jeu_.correctedInputs;
+        const arrowInputs = this.jeu_.correctedInputs_;
         if (arrowInputs[1] && this.grounded_ && !this.nearWallLeft_ && !this.nearWallRight_) {
             this.vy_ = (-0.3);
         }
@@ -188,8 +185,8 @@ class Player extends Animated {
             else {
                 this.vx_ = this.vx_ - 0.01;
             }
-            if (this.vx_ < -this.terminalVelocityX_) {
-                this.vx_ = (-this.terminalVelocityX_);
+            if (this.vx_ < -this.maxVelocityX_) {
+                this.vx_ = (-this.maxVelocityX_);
             }
         }
         if (arrowInputs[3]) {
@@ -199,8 +196,8 @@ class Player extends Animated {
             else {
                 this.vx_ = this.vx_ + 0.01;
             }
-            if (Math.abs(this.vx_) > this.terminalVelocityX_) {
-                this.vx_ = this.terminalVelocityX_;
+            if (Math.abs(this.vx_) > this.maxVelocityX_) {
+                this.vx_ = this.maxVelocityX_;
             }
         }
         if (arrowInputs[1] && this.nearWallLeft_ && this.lastTimeWasNearWall) {
@@ -221,8 +218,8 @@ class Player extends Animated {
         }
         else {
             this.vy_ = this.vy_ + this.gravity_;
-            if (this.vy_ > this.terminalVelocityY_) {
-                this.vy_ = this.terminalVelocityY_;
+            if (this.vy_ > this.fallingMaxVelocityY_) {
+                this.vy_ = this.fallingMaxVelocityY_;
             }
             this.newGridY_ = this.gridY_ + this.vy_;
         }
@@ -278,7 +275,7 @@ class Player extends Animated {
         this.updateVisualPosition();
     }
     moveSimplest() {
-        const arrowInputs = this.jeu_.correctedInputs;
+        const arrowInputs = this.jeu_.correctedInputs_;
         if (arrowInputs[0]) {
             this.down();
         }
@@ -398,8 +395,8 @@ class Player extends Animated {
         this.vx_ = 0;
         this.vy_ = 0;
         this.gravity_ = 0.02;
-        this.terminalVelocityX_ = 0.3;
-        this.terminalVelocityY_ = 0.3;
+        this.maxVelocityX_ = 0.3;
+        this.fallingMaxVelocityY_ = 0.3;
         this.pushBack = 0.001;
         this.grounded_ = false;
         this.nearWallLeft_ = false;
@@ -409,7 +406,7 @@ class Player extends Animated {
         this.devMove = 2;
         this.playerGridWidth_ = width;
         this.playerGridHeight_ = height;
-        this.allowContinousJump = true;
+        this.allowContinousJumping = true;
         this.alwaysJumping = false;
         this.setImage(imgname, this.jeu_.step_ * this.playerGridWidth_, this.jeu_.step_ * this.playerGridHeight_);
         this.updateVisualPosition();

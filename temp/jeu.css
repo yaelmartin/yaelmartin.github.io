@@ -4,6 +4,10 @@
   src: url('font/pixel.ttf') format('truetype');
 }
 
+img{
+  image-rendering: pixelated;
+}
+
 body {
  position: absolute;
  overflow: hidden;
@@ -17,7 +21,7 @@ body {
 
 #scene {
  user-select: none;
- /*overflow: hidden;*/
+ overflow: hidden;
 
  background-color: #FFFFFF;
  box-shadow: 12px 12px 4px rgba(150,150,150,0.75);

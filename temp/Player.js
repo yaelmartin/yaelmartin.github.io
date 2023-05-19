@@ -9,7 +9,6 @@ class Player extends Animated {
             this.moveSimplest();
         }
         if (this.devMove == 1) {
-            this.moveHope();
         }
         if (this.devMove == 2) {
             this.moveHope2();
@@ -148,132 +147,6 @@ class Player extends Animated {
         this.updateVisualPosition();
         this.previousInputs = arrowInputs;
     }
-    moveHope() {
-        this.newGridX_ = this.gridX_;
-        this.newGridY_ = this.gridY_;
-        this.getCollisionsConsole();
-        this.newGridY_ = this.newGridY_ + 0.05;
-        let xCenter = (this.newGridX_ + this.playerGridWidth_ / 2);
-        if (xCenter % 1 < 0.5) {
-            this.newGridX_ = this.newGridX_ + 0.05;
-        }
-        else {
-            this.newGridX_ = this.newGridX_ - 0.05;
-        }
-        this.updateGridCollisionCoords();
-        this.grounded_ = this.CheckCollisionsDown();
-        this.newGridY_ = this.gridY_;
-        const arrowInputs = this.jeu_.correctedInputs_;
-        if (arrowInputs[1] && this.grounded_ && !this.nearWallLeft_ && !this.nearWallRight_) {
-            this.vy_ = (-0.3);
-        }
-        if (arrowInputs[2] == arrowInputs[3]) {
-            if (this.grounded_) {
-                this.vx_ = this.vx_ / 1.8;
-            }
-            else {
-                this.vx_ = this.vx_ / 1.5;
-            }
-            if (Math.abs(this.vx_) < 0.02) {
-                this.vx_ = 0;
-            }
-        }
-        if (arrowInputs[2]) {
-            if (this.grounded_) {
-                this.vx_ = this.vx_ - 0.05;
-            }
-            else {
-                this.vx_ = this.vx_ - 0.01;
-            }
-            if (this.vx_ < -this.maxVelocityX_) {
-                this.vx_ = (-this.maxVelocityX_);
-            }
-        }
-        if (arrowInputs[3]) {
-            if (this.grounded_) {
-                this.vx_ = this.vx_ + 0.05;
-            }
-            else {
-                this.vx_ = this.vx_ + 0.01;
-            }
-            if (Math.abs(this.vx_) > this.maxVelocityX_) {
-                this.vx_ = this.maxVelocityX_;
-            }
-        }
-        if (arrowInputs[1] && this.nearWallLeft_ && this.lastTimeWasNearWall) {
-            this.lastTimeWasNearWall = false;
-            this.vy_ = (-0.3);
-            this.vx_ = 0.2;
-        }
-        if (arrowInputs[1] && this.nearWallRight_ && this.lastTimeWasNearWall) {
-            this.lastTimeWasNearWall = false;
-            this.vy_ = -0.3;
-            this.vx_ = (-0.2);
-        }
-        this.newGridX_ = this.gridX_ + this.vx_;
-        if (this.grounded_) {
-            if (this.vy_ < 0) {
-                this.newGridY_ = this.gridY_ + this.vy_;
-            }
-        }
-        else {
-            this.vy_ = this.vy_ + this.gravity_;
-            if (this.vy_ > this.fallingMaxVelocityY_) {
-                this.vy_ = this.fallingMaxVelocityY_;
-            }
-            this.newGridY_ = this.gridY_ + this.vy_;
-        }
-        if (this.vx_ < 0) {
-            this.updateGridCollisionCoords();
-            if (this.CheckCollisionsLeft()) {
-                this.nearWallLeft_ = true;
-                this.lastTimeWasNearWall = true;
-                this.vx_ = 0;
-                this.newGridX_ = Math.floor(this.newGridX_) + 1 + this.pushBack;
-            }
-            else {
-                this.nearWallRight_ = false;
-                this.lastTimeWasNearWall = false;
-            }
-        }
-        if (this.vx_ > 0) {
-            this.updateGridCollisionCoords();
-            if (this.CheckCollisionsRight()) {
-                this.nearWallRight_ = true;
-                this.lastTimeWasNearWall = true;
-                this.vx_ = 0;
-                this.newGridX_ = Math.floor(this.newGridX_) + 1 - this.playerGridWidth_ - this.pushBack;
-            }
-            else {
-                this.nearWallLeft_ = false;
-                this.lastTimeWasNearWall = false;
-            }
-        }
-        if (this.vy_ < 0) {
-            this.updateGridCollisionCoords();
-            if (this.CheckCollisionsUp()) {
-                this.newGridY_ = Math.floor(this.newGridY_) + 1 + this.pushBack;
-                this.vy_ = 0;
-                this.nearWallLeft_ = false;
-                this.nearWallLeft_ = false;
-                this.lastTimeWasNearWall = false;
-            }
-            else {
-                this.grounded_ = false;
-            }
-        }
-        if (this.vy_ > 0 && !this.grounded_) {
-            this.updateGridCollisionCoords();
-            if (this.CheckCollisionsDown()) {
-                this.grounded_ = true;
-                this.newGridY_ = Math.floor(this.newGridY_) + 1 - this.playerGridHeight_ - this.pushBack * 100;
-                this.vy_ = 0;
-            }
-        }
-        this.gridX_ = this.newGridX_;
-        this.gridY_ = this.newGridY_;
-        this.updateVisualPosition();
-    }
     moveSimplest() {
         const arrowInputs = this.jeu_.correctedInputs_;
         if (arrowInputs[0]) {
@@ -408,8 +281,24 @@ class Player extends Animated {
         this.playerGridHeight_ = height;
         this.allowContinousJumping = true;
         this.alwaysJumping = false;
+        let elementLogo = document.createElement("img");
+        elementLogo.style.zIndex = "101";
+        this.logo_ = new GridPositioned(elementLogo, jeu, -1, -1);
+        this.logo_.setImage("img/spinningLogo.png", this.jeu_.step_ * this.playerGridWidth_ * 1.6, this.jeu_.step_ * this.playerGridHeight_ * 1.6);
+        this.jeu_.appendChild(this.logo_);
         this.setImage(imgname, this.jeu_.step_ * this.playerGridWidth_, this.jeu_.step_ * this.playerGridHeight_);
         this.updateVisualPosition();
         this.jeu_.appendChild(this);
+    }
+    updateVisualPosition() {
+        this.setXY(this.jeu_.x0_ + this.gridX_ * this.jeu_.step_, this.jeu_.y0_ + this.gridY_ * this.jeu_.step_);
+        this.logo_.gridX_ = (this.newGridX_ + this.playerGridWidth_ / 2) - (this.playerGridWidth_ * 1.6) / 2;
+        this.logo_.gridY_ = (this.newGridY_ + this.playerGridHeight_ / 2) - (this.playerGridHeight_ * 1.6) / 2;
+        this.logo_.rotate(this.vx_ * 50);
+        this.logo_.updateVisualPosition();
+    }
+    clearPlayer() {
+        this.jeu_.removeChild(this.logo_);
+        this.logo_ = null;
     }
 }

@@ -1,8 +1,10 @@
 "use strict";
 class MusicPlayer {
-    constructor(audioElementId) {
+    constructor(audioElementId, loop) {
         this.audioElement = document.getElementById(audioElementId);
-        this.audioElement.addEventListener('ended', this.handleAudioEnded.bind(this));
+        if (loop) {
+            this.audioElement.addEventListener('ended', this.handleAudioEnded.bind(this));
+        }
     }
     play() {
         this.audioElement.play();
@@ -13,6 +15,9 @@ class MusicPlayer {
     playAt(seconds) {
         this.audioElement.currentTime = seconds;
         this.audioElement.play();
+    }
+    volume(multiplier) {
+        this.audioElement.volume = multiplier;
     }
     handleAudioEnded() {
         this.audioElement.currentTime = 0;

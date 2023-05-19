@@ -25,11 +25,15 @@ class RawMap {
         this.playerSpawnY_ = 1;
         this.safeAreaX_ = 10;
         this.safeAreaY_ = 0;
-        this.safeAreaWidth_ = 10;
+        this.safeAreaWidth_ = 14;
         this.safeAreaHeight_ = 12;
         this.safeAreaIsHorizontal_ = true;
-        this.safeAreaMaxHorizontalSpeed_ = 0.02;
+        this.safeAreaMaxHorizontalSpeed_ = 0.01;
         this.safeAreaAccelHorizontalSpeed_ = (-0.001);
         this.backgroundImage_ = ["img/montain1.jpg"];
+        this.foregroundImage_ = ["img/transparent.png"];
+        this.flowersToOpenPortal_ = 0;
+        this.isbackgroundSpecific_ = false;
+        this.showBlocks = true;
     }
 }

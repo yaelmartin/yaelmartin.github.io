@@ -32,6 +32,15 @@ class Player extends Animated {
                 }
             }
         }
+        if (this.grounded_ && Math.abs(this.vx_) > 0.1) {
+            this.jeu_.sfxRolling_.play();
+        }
+        else {
+            this.jeu_.sfxRolling_.pause();
+        }
+        if (!this.grounded_ && Math.abs(this.vx_) > 0.2) {
+            this.jeu_.sfxAirSpeed_.play();
+        }
         if (arrowInputs[1] && this.grounded_) {
             this.vy_ = (-0.25);
         }
@@ -69,11 +78,15 @@ class Player extends Animated {
             }
         }
         if (arrowInputs[1] && this.nearWallLeft_ && this.lastTimeWasNearWall && arrowInputs[2] && !this.grounded_) {
+            this.jeu_.sfxJump_.play();
+            this.jeu_.sfxWood_.play();
             this.lastTimeWasNearWall = false;
             this.vy_ = (-0.3);
             this.vx_ = 0.2;
         }
         if (arrowInputs[1] && this.nearWallRight_ && this.lastTimeWasNearWall && arrowInputs[3] && !this.grounded_) {
+            this.jeu_.sfxJump_.play();
+            this.jeu_.sfxWood_.play();
             this.lastTimeWasNearWall = false;
             this.vy_ = -0.3;
             this.vx_ = (-0.2);
@@ -101,6 +114,11 @@ class Player extends Animated {
             if (this.CheckCollisionsUp()) {
                 this.newGridY_ = Math.floor(this.newGridY_) + 1 + this.pushBack;
                 this.vy_ = 0;
+            }
+            else {
+                if (this.grounded_) {
+                    this.jeu_.sfxJump_.play();
+                }
             }
             this.newGridX_ = tempGridX;
         }
@@ -298,6 +316,7 @@ class Player extends Animated {
         this.logo_.updateVisualPosition();
     }
     clearPlayer() {
+        this.jeu_.sfxRolling_.pause();
         this.jeu_.removeChild(this.logo_);
         this.logo_ = null;
     }

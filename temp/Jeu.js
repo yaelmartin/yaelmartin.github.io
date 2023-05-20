@@ -10,9 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 class Jeu extends Scene {
     SetMusic() {
-        this.musicAmbiant1 = new MusicPlayer("m_ambiant1", true);
-        this.musicDead = new MusicPlayer("m_dead", false);
-        this.musicWin = new MusicPlayer("m_win", false);
+        this.musicAmbiant1_ = new MusicPlayer("m_ambiant1", true);
+        this.musicDead_ = new MusicPlayer("m_dead", false);
+        this.musicWin_ = new MusicPlayer("m_win", false);
+        this.sfxJump_ = new MusicPlayer("s_jump", false);
+        this.sfxWood_ = new MusicPlayer("s_wood", false);
+        this.sfxRolling_ = new MusicPlayer("s_rolling", true);
+        this.sfxAirSpeed_ = new MusicPlayer("s_airspeed", false);
+        this.sfxStorm_ = new MusicPlayer("s_storm", true);
     }
     DevInputSystem() {
         this.totalDeaths_ = 0;
@@ -25,7 +30,7 @@ class Jeu extends Scene {
     }
     loadLevel(level) {
         this.replayCorrectedInputs_ = new Array();
-        this.musicAmbiant1.play();
+        this.musicAmbiant1_.play();
         this.playerIsAlive_ = true;
         this.playerLife_ = 1;
         this.userInterface_.setVisualLife(this.playerLife_);
@@ -59,7 +64,7 @@ class Jeu extends Scene {
             console.log("player died");
             this.playerIsAlive_ = false;
             this.clearLevel();
-            this.musicDead.play();
+            this.musicDead_.play();
             this.loadLevel(this.currentLevel_);
         }
     }
@@ -97,7 +102,16 @@ class Jeu extends Scene {
         return surroundings;
     }
     checkIfPlayerInSafeArea() {
-        return (this.player_.gridX_ >= this.dangerZone_.gridX_ && this.player_.gridX_ + this.player_.playerGridWidth_ < this.dangerZone_.gridX_ + this.dangerZone_.zoneGridWidth_);
+        let safe = this.player_.gridX_ >= this.dangerZone_.gridX_ && this.player_.gridX_ + this.player_.playerGridWidth_ < this.dangerZone_.gridX_ + this.dangerZone_.zoneGridWidth_;
+        if (safe) {
+            this.sfxStorm_.pause();
+            this.musicAmbiant1_.volume(1);
+        }
+        else {
+            this.sfxStorm_.play();
+            this.musicAmbiant1_.volume(0.3);
+        }
+        return (safe);
     }
     setBackground(filepath) {
         this.background_.setImage(filepath, this.horizontalArrayLength * this.step_, this.verticalArrayLength * this.step_);
@@ -194,6 +208,7 @@ class Jeu extends Scene {
         }
     }
     clearLevel() {
+        this.sfxStorm_.pause();
         for (let i = 0; i < this.blocks_.length; i++) {
             let sprite = this.blocks_[i];
             this.removeChild(sprite);

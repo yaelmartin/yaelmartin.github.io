@@ -21,6 +21,7 @@ class Jeu extends Scene {
     }
     DevInputSystem() {
         this.totalDeaths_ = 0;
+        this.currentLevel_ = 0;
         this.SetMusic();
         this.inputSystem_ = new InputSystem(this);
         this.inputSystem_.startListening();
@@ -29,35 +30,59 @@ class Jeu extends Scene {
         this.loopFrame();
     }
     loadLevel(level) {
-        this.replayCorrectedInputs_ = new Array();
-        this.musicAmbiant1_.play();
-        this.playerIsAlive_ = true;
-        this.playerLife_ = 1;
-        this.userInterface_.setVisualLife(this.playerLife_);
-        this.rawMap_ = new RawMap(1);
-        this.drawMap();
+        if (this.currentLevel_ > this.levelLists_.length - 1) {
+            this.loadEnding();
+        }
+        else {
+            this.replayCorrectedInputs_ = new Array();
+            this.levelFinished_ = false;
+            this.nbFlowersRecolted_ = 0;
+            this.levelFinished_ = false;
+            this.portalIsOpened_ = false;
+            this.musicAmbiant1_.play();
+            this.damageVelocity_ = 0;
+            this.playerIsAlive_ = true;
+            this.userInterface_.setVisualLife(this.playerLife_);
+            this.rawMap_ = new RawMap(this.levelLists_[this.currentLevel_]);
+            this.loadMapAndInitializeLogic();
+        }
     }
     loopFrame() {
         this.loopOK = setInterval(() => {
-            if (this.playerIsAlive_) {
+            if (!this.levelFinished_) {
                 this.idCurrentFrame_ = this.idCurrentFrame_ + 1;
                 this.userInterface_.setVisualTimer((this.idCurrentFrame_ / 60).toFixed(2) + "s");
                 this.correctedInputs_ = this.inputSystem_.getCorrectedArrowsInputs();
                 this.replayCorrectedInputs_.push(this.correctedInputs_);
                 this.player_.move();
                 this.dangerZone_.move();
+                this.portal_.animationRotate();
                 if (!this.checkIfPlayerInSafeArea()) {
-                    this.playerLife_ = this.playerLife_ - 0.01;
+                    this.playerLife_ = this.playerLife_ - this.damageVelocity_;
                 }
-                this.updatePlayerIsAlive();
+                this.updatePortalStatus();
+                this.chechIfPlayerIsStillAlive();
+                this.updateLevelIsFinished();
                 this.inputSystem_.applyReleasedKey();
             }
+            else {
+                if (!this.gameFinished_) {
+                    console.log("level finished");
+                    this.clearLevel();
+                    this.currentLevel_ = this.currentLevel_ + 1;
+                    this.loadLevel(this.currentLevel_);
+                }
+            }
         }, this.tickRate_);
+    }
+    loadEnding() {
+        this.gameFinished_ = true;
+        console.log("GG YOU FINISHED");
     }
     distanceBetweenPoints(x1, y1, x2, y2) {
         return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
     }
-    updatePlayerIsAlive() {
+    chechIfPlayerIsStillAlive() {
         this.userInterface_.setVisualLife(this.playerLife_);
         if (this.playerLife_ < 0) {
             this.totalDeaths_ = this.totalDeaths_ + 1;
@@ -68,7 +93,24 @@ class Jeu extends Scene {
             this.loadLevel(this.currentLevel_);
         }
     }
+    updatePortalStatus() {
+        if (!this.portalIsOpened_) {
+            if (this.flowersToOpenPortal_ <= this.nbFlowersRecolted_) {
+                console.log("we should make the portal open");
+                this.portalIsOpened_ = true;
+                this.portal_.setVisualStatus(4);
+            }
+        }
+    }
     updateLevelIsFinished() {
+        if (this.portalIsOpened_) {
+            if (this.distanceBetweenPoints(this.player_.gridX_ + (this.player_.playerGridWidth_ / 2), this.player_.gridY_ + (this.player_.playerGridHeight_ / 2), this.portal_.centerGridX_, this.portal_.centerGridY_)
+                < 0.8) {
+                this.levelFinished_ = true;
+            }
+        }
+    }
+    flowersActionLogic() {
     }
     addLife(value) {
         this.playerLife_ = this.playerLife_ + value;
@@ -106,10 +148,12 @@ class Jeu extends Scene {
         if (safe) {
             this.sfxStorm_.pause();
             this.musicAmbiant1_.volume(1);
+            this.damageVelocity_ = 0;
         }
         else {
             this.sfxStorm_.play();
             this.musicAmbiant1_.volume(0.3);
+            this.damageVelocity_ = this.damageVelocity_ + 0.0005;
         }
         return (safe);
     }
@@ -119,10 +163,13 @@ class Jeu extends Scene {
     setForeground(filepath) {
         this.foreground_.setImage(filepath, this.horizontalArrayLength * this.step_, this.verticalArrayLength * this.step_);
     }
-    drawMap() {
-        console.log("Jeu.ts drawMap() entered");
+    loadMapAndInitializeLogic() {
+        this.y0_ = 0;
+        this.x0_ = 0;
+        this.flowersToOpenPortal_ = this.rawMap_.flowersToOpenPortal_;
         this.verticalArrayLength = this.rawMap_.rawGrid_.length;
         this.horizontalArrayLength = this.rawMap_.rawGrid_[0].length;
+        this.playerLife_ = this.rawMap_.initialLifeAmount_;
         let elementBackground = document.createElement("img");
         elementBackground.style.zIndex = "0";
         this.background_ = new Sprite(elementBackground);
@@ -135,16 +182,16 @@ class Jeu extends Scene {
         this.setForeground(this.rawMap_.foregroundImage_[0]);
         this.foreground_.setXY(0, 0);
         this.appendChild(this.foreground_);
+        let elementPortal = document.createElement("img");
+        elementPortal.style.zIndex = "90";
+        this.portal_ = new Portal(elementPortal, this, this.rawMap_.portalCenterX_, this.rawMap_.portalCenterY_);
         let elementPlayer = document.createElement("img");
         elementPlayer.style.zIndex = "100";
         this.player_ = new Player(elementPlayer, this, this.rawMap_.playerSpawnX_, this.rawMap_.playerSpawnY_, 0.8, 0.8, "img/yamaegreen.png");
         let elementZone = document.createElement("img");
         elementZone.style.zIndex = "10";
         this.dangerZone_ = new DangerZone(elementZone, this, this.rawMap_.safeAreaX_, this.rawMap_.safeAreaY_, this.rawMap_.safeAreaWidth_, this.rawMap_.safeAreaHeight_, false, this.rawMap_.safeAreaMaxHorizontalSpeed_, this.rawMap_.safeAreaAccelHorizontalSpeed_);
-        this.y0_ = 0;
-        this.x0_ = 0;
         for (let i = 0; i < this.verticalArrayLength; i++) {
-            let lineHorizontal = new Array();
             for (let j = 0; j < this.horizontalArrayLength; j++) {
                 let typeCase = this.rawMap_.rawGrid_[i][j];
                 switch (typeCase) {
@@ -173,32 +220,12 @@ class Jeu extends Scene {
                         this.buttons_.push(button);
                         break;
                     }
-                    case (8): {
-                        let element = document.createElement("img");
-                        element.style.zIndex = "30";
-                        let flower = new GridPositioned(element, this, j, i);
-                        flower.setImage("img/green.png", this.step_, this.step_);
-                        flower.updateVisualPosition();
-                        this.appendChild(flower);
-                        this.flowers_.push(flower);
-                        break;
-                    }
-                    case 9: {
-                        let element = document.createElement("img");
-                        element.style.zIndex = "30";
-                        let flower = new GridPositioned(element, this, j, i);
-                        flower.setImage("img/exit.png", this.step_, this.step_);
-                        flower.updateVisualPosition();
-                        this.appendChild(flower);
-                        this.flowers_.push(flower);
-                        break;
-                    }
                     default: {
                         console.log("value of this case is invalid ! => " + this.rawMap_.rawGrid_[i][j]);
                         let element = document.createElement("img");
                         element.style.zIndex = "1000";
                         let invalid = new GridPositioned(element, this, j, i);
-                        invalid.setImage("img/missingTexture.webp", this.step_, this.step_);
+                        invalid.setImage("img/flowerPink.png", this.step_, this.step_);
                         invalid.updateVisualPosition();
                         this.appendChild(invalid);
                         break;
@@ -220,11 +247,11 @@ class Jeu extends Scene {
         }
         this.flowers_ = [];
         this.dangerZone_.clearDangerZone();
-        this.removeChild(this.dangerZone_);
         this.dangerZone_ = null;
         this.player_.clearPlayer();
-        this.removeChild(this.player_);
         this.player_ = null;
+        this.portal_.clearPortal();
+        this.portal_ = null;
     }
     exportReplayInputs() {
         const hexString = this.replayCorrectedInputs_.map(frame => this.convertFrameToHex(frame)).join('');
@@ -275,7 +302,8 @@ class Jeu extends Scene {
     constructor(element) {
         super(element, false);
         this.currentLevel_ = 0;
-        this.levelFinished_ = false;
+        this.gameFinished_ = false;
+        this.levelLists_ = [0, 1];
         this.blocks_ = new Array;
         this.flowers_ = new Array;
         this.buttons_ = new Array;

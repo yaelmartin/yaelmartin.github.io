@@ -5,16 +5,6 @@ class Player extends Animated {
         console.log(this.CheckCollisionsDown(), this.CheckCollisionsUp(), this.CheckCollisionsLeft(), this.CheckCollisionsRight());
     }
     move() {
-        if (this.devMove == 0) {
-            this.moveSimplest();
-        }
-        if (this.devMove == 1) {
-        }
-        if (this.devMove == 2) {
-            this.moveHope2();
-        }
-    }
-    moveHope2() {
         this.newGridX_ = this.gridX_;
         this.newGridY_ = this.gridY_;
         this.newGridY_ = this.newGridY_ + 0.05;
@@ -294,7 +284,6 @@ class Player extends Animated {
         this.nearWallRight_ = false;
         this.lastTimeWasNearWall = false;
         this.previousInputs = [false, false, false, false];
-        this.devMove = 2;
         this.playerGridWidth_ = width;
         this.playerGridHeight_ = height;
         this.allowContinousJumping = true;
@@ -319,5 +308,6 @@ class Player extends Animated {
         this.jeu_.sfxRolling_.pause();
         this.jeu_.removeChild(this.logo_);
         this.logo_ = null;
+        this.jeu_.removeChild(this);
     }
 }

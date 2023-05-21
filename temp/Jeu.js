@@ -17,7 +17,10 @@ class Jeu extends Scene {
         this.sfxWood_ = new MusicPlayer("s_wood", false);
         this.sfxRolling_ = new MusicPlayer("s_rolling", true);
         this.sfxAirSpeed_ = new MusicPlayer("s_airspeed", false);
+        this.sfxPortalTeleport_ = new MusicPlayer("s_portalteleport", false);
         this.sfxStorm_ = new MusicPlayer("s_storm", true);
+        this.sfxStormSwapDirection = new MusicPlayer("s_stormswap", false);
+        this.sfxFlowerRecolted_ = new MusicPlayer("s_flowerrecolted", false);
     }
     DevInputSystem() {
         this.totalDeaths_ = 0;
@@ -26,6 +29,16 @@ class Jeu extends Scene {
         this.inputSystem_ = new InputSystem(this);
         this.inputSystem_.startListening();
         this.userInterface_ = new UserInterface(this);
+        let elementForeground = document.createElement("img");
+        elementForeground.style.zIndex = "25";
+        this.foreground_ = new Sprite(elementForeground);
+        this.foreground_.setXY(0, 0);
+        this.appendChild(this.foreground_);
+        let elementBackground = document.createElement("img");
+        elementBackground.style.zIndex = "0";
+        this.background_ = new Sprite(elementBackground);
+        this.background_.setXY(0, 0);
+        this.appendChild(this.background_);
         this.loadLevel(this.currentLevel_);
         this.loopFrame();
     }
@@ -34,7 +47,9 @@ class Jeu extends Scene {
             this.loadEnding();
         }
         else {
+            this.musicAmbiant1_.volume(1);
             this.replayCorrectedInputs_ = new Array();
+            this.currentBackgroundForeground_ = 0;
             this.levelFinished_ = false;
             this.nbFlowersRecolted_ = 0;
             this.levelFinished_ = false;
@@ -55,8 +70,12 @@ class Jeu extends Scene {
                 this.correctedInputs_ = this.inputSystem_.getCorrectedArrowsInputs();
                 this.replayCorrectedInputs_.push(this.correctedInputs_);
                 this.player_.move();
+                this.updatePlayerCenterCoordinates();
+                this.tryActionButton();
+                this.tryCatchFlowers();
                 this.dangerZone_.move();
                 this.portal_.animationRotate();
+                this.flowersAnimation();
                 if (!this.checkIfPlayerInSafeArea()) {
                     this.playerLife_ = this.playerLife_ - this.damageVelocity_;
                 }
@@ -93,24 +112,33 @@ class Jeu extends Scene {
             this.loadLevel(this.currentLevel_);
         }
     }
+    updatePlayerCenterCoordinates() {
+        this.playerCenterX_ = this.player_.gridX_ + (this.player_.playerGridWidth_ / 2);
+        this.playerCenterY_ = this.player_.gridY_ + (this.player_.playerGridHeight_ / 2);
+    }
     updatePortalStatus() {
         if (!this.portalIsOpened_) {
             if (this.flowersToOpenPortal_ <= this.nbFlowersRecolted_) {
-                console.log("we should make the portal open");
+                console.log("opening portal");
                 this.portalIsOpened_ = true;
+                this.sfxPortalTeleport_.play();
                 this.portal_.setVisualStatus(4);
             }
         }
     }
     updateLevelIsFinished() {
         if (this.portalIsOpened_) {
-            if (this.distanceBetweenPoints(this.player_.gridX_ + (this.player_.playerGridWidth_ / 2), this.player_.gridY_ + (this.player_.playerGridHeight_ / 2), this.portal_.centerGridX_, this.portal_.centerGridY_)
+            if (this.distanceBetweenPoints(this.playerCenterX_, this.playerCenterY_, this.portal_.centerGridX_, this.portal_.centerGridY_)
                 < 0.8) {
+                this.sfxPortalTeleport_.play();
                 this.levelFinished_ = true;
             }
         }
     }
-    flowersActionLogic() {
+    flowersAnimation() {
+        for (let i = 0; i < this.flowers_.length; i++) {
+            this.flowers_[i].animateRotate();
+        }
     }
     addLife(value) {
         this.playerLife_ = this.playerLife_ + value;
@@ -157,40 +185,72 @@ class Jeu extends Scene {
         }
         return (safe);
     }
+    tryCatchFlowers() {
+        for (let i = 0; i < this.flowers_.length; i++) {
+            let flower = this.flowers_[i];
+            if (!flower.hasBeenRecolted) {
+                if (this.distanceBetweenPoints(this.playerCenterX_, this.playerCenterY_, flower.centerGridX_, flower.centerGridY_) < 0.8) {
+                    flower.catch();
+                    this.nbFlowersRecolted_ = this.nbFlowersRecolted_ + 1;
+                    let percentFlower = this.nbFlowersRecolted_ / this.flowersToOpenPortal_;
+                    this.portal_.setVisualStatus(Math.floor(percentFlower * 4));
+                    this.userInterface_.setFlowerBox(this.nbFlowersRecolted_, this.flowersToOpenPortal_);
+                }
+            }
+        }
+    }
+    tryActionButton() {
+        for (let i = 0; i < this.buttons_.length; i++) {
+            let button = this.buttons_[i];
+            if (this.distanceBetweenPoints(this.playerCenterX_, this.playerCenterY_, button.centerGridX_, button.centerGridY_) < 0.7) {
+                button.trySetNewValuesDangerZone();
+            }
+        }
+    }
     setBackground(filepath) {
-        this.background_.setImage(filepath, this.horizontalArrayLength * this.step_, this.verticalArrayLength * this.step_);
+        if (filepath != null) {
+            this.background_.setImage(filepath, this.horizontalArrayLength * this.step_, this.verticalArrayLength * this.step_);
+        }
     }
     setForeground(filepath) {
-        this.foreground_.setImage(filepath, this.horizontalArrayLength * this.step_, this.verticalArrayLength * this.step_);
+        if (filepath != null) {
+            this.foreground_.setImage(filepath, this.horizontalArrayLength * this.step_, this.verticalArrayLength * this.step_);
+        }
     }
     loadMapAndInitializeLogic() {
         this.y0_ = 0;
         this.x0_ = 0;
         this.flowersToOpenPortal_ = this.rawMap_.flowersToOpenPortal_;
+        this.possibleBackgrounds_ = this.rawMap_.backgroundImage_;
+        this.possibleForegrounds_ = this.rawMap_.foregroundImage_;
+        this.userInterface_.setFlowerBox(this.nbFlowersRecolted_, this.flowersToOpenPortal_);
         this.verticalArrayLength = this.rawMap_.rawGrid_.length;
         this.horizontalArrayLength = this.rawMap_.rawGrid_[0].length;
         this.playerLife_ = this.rawMap_.initialLifeAmount_;
-        let elementBackground = document.createElement("img");
-        elementBackground.style.zIndex = "0";
-        this.background_ = new Sprite(elementBackground);
         this.setBackground(this.rawMap_.backgroundImage_[0]);
-        this.background_.setXY(0, 0);
-        this.appendChild(this.background_);
-        let elementForeground = document.createElement("img");
-        elementForeground.style.zIndex = "25";
-        this.foreground_ = new Sprite(elementForeground);
+        let elementZone = document.createElement("img");
+        elementZone.style.zIndex = "10";
+        this.dangerZone_ = new DangerZone(elementZone, this, this.rawMap_.safeAreaX_, this.rawMap_.safeAreaY_, this.rawMap_.safeAreaWidth_, this.rawMap_.safeAreaHeight_, false, this.rawMap_.safeAreaMaxHorizontalSpeed_, this.rawMap_.safeAreaAccelHorizontalSpeed_);
         this.setForeground(this.rawMap_.foregroundImage_[0]);
-        this.foreground_.setXY(0, 0);
-        this.appendChild(this.foreground_);
+        this.buttons_ = [];
+        for (let i = 0; i < this.rawMap_.buttons_.length; i++) {
+            let elementButton = document.createElement("img");
+            elementButton.style.zIndex = "79";
+            this.buttons_.push(new ButtonDangerZone(elementButton, this, this.rawMap_.buttons_[i][0], this.rawMap_.buttons_[i][1], this.rawMap_.buttons_[i][2], this.rawMap_.buttons_[i][3]));
+        }
+        this.flowers_ = [];
+        for (let i = 0; i < this.rawMap_.flowers_.length; i++) {
+            let elementFlower = document.createElement("img");
+            elementFlower.style.zIndex = "80";
+            this.flowers_.push(new Flower(elementFlower, this, this.rawMap_.flowers_[i][0], this.rawMap_.flowers_[i][1], this.rawMap_.flowers_[i][2], this.rawMap_.flowers_[i][3], this.rawMap_.flowers_[i][4], this.rawMap_.flowers_[i][5], this.rawMap_.flowers_[i][6], this.rawMap_.flowers_[i][7]));
+        }
         let elementPortal = document.createElement("img");
         elementPortal.style.zIndex = "90";
         this.portal_ = new Portal(elementPortal, this, this.rawMap_.portalCenterX_, this.rawMap_.portalCenterY_);
         let elementPlayer = document.createElement("img");
         elementPlayer.style.zIndex = "100";
-        this.player_ = new Player(elementPlayer, this, this.rawMap_.playerSpawnX_, this.rawMap_.playerSpawnY_, 0.8, 0.8, "img/yamaegreen.png");
-        let elementZone = document.createElement("img");
-        elementZone.style.zIndex = "10";
-        this.dangerZone_ = new DangerZone(elementZone, this, this.rawMap_.safeAreaX_, this.rawMap_.safeAreaY_, this.rawMap_.safeAreaWidth_, this.rawMap_.safeAreaHeight_, false, this.rawMap_.safeAreaMaxHorizontalSpeed_, this.rawMap_.safeAreaAccelHorizontalSpeed_);
+        this.player_ = new Player(elementPlayer, this, this.rawMap_.playerSpawnX_, this.rawMap_.playerSpawnY_, 0.8, 0.8, "img/playerGreen.png");
+        let blockImgurl = this.rawMap_.blocksImgurl_;
         for (let i = 0; i < this.verticalArrayLength; i++) {
             for (let j = 0; j < this.horizontalArrayLength; j++) {
                 let typeCase = this.rawMap_.rawGrid_[i][j];
@@ -199,25 +259,15 @@ class Jeu extends Scene {
                         break;
                     }
                     case 1: {
-                        if (this.rawMap_.showBlocks) {
+                        if (this.rawMap_.showBlocks_) {
                             let element = document.createElement("img");
                             element.style.zIndex = "30";
                             let block = new GridPositioned(element, this, j, i);
-                            block.setImage("img/purpleblue.png", this.step_, this.step_);
+                            block.setImage(blockImgurl, this.step_, this.step_);
                             block.updateVisualPosition();
                             this.appendChild(block);
                             this.blocks_.push(block);
                         }
-                        break;
-                    }
-                    case (7): {
-                        let element = document.createElement("img");
-                        element.style.zIndex = "30";
-                        let button = new GridPositioned(element, this, j, i);
-                        button.setImage("img/button.jpg", this.step_, this.step_);
-                        button.updateVisualPosition();
-                        this.appendChild(button);
-                        this.buttons_.push(button);
                         break;
                     }
                     default: {
@@ -225,7 +275,7 @@ class Jeu extends Scene {
                         let element = document.createElement("img");
                         element.style.zIndex = "1000";
                         let invalid = new GridPositioned(element, this, j, i);
-                        invalid.setImage("img/flowerPink.png", this.step_, this.step_);
+                        invalid.setImage("img/missingTexture.webp", this.step_, this.step_);
                         invalid.updateVisualPosition();
                         this.appendChild(invalid);
                         break;
@@ -241,6 +291,10 @@ class Jeu extends Scene {
             this.removeChild(sprite);
         }
         this.blocks_ = [];
+        for (let i = 0; i < this.buttons_.length; i++) {
+            let sprite = this.buttons_[i];
+            this.removeChild(sprite);
+        }
         for (let i = 0; i < this.flowers_.length; i++) {
             let sprite = this.flowers_[i];
             this.removeChild(sprite);
@@ -303,7 +357,7 @@ class Jeu extends Scene {
         super(element, false);
         this.currentLevel_ = 0;
         this.gameFinished_ = false;
-        this.levelLists_ = [0, 1];
+        this.levelLists_ = ["training_move", "training_flowers", "training_zone", "training_wall_jump", "parkour_classic"];
         this.blocks_ = new Array;
         this.flowers_ = new Array;
         this.buttons_ = new Array;

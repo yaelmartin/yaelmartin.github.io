@@ -21,7 +21,7 @@ class Portal extends CenterPositioned {
     animationRotate() {
         switch (this.visualStatus) {
             case 1:
-                this.rotate(0.2);
+                this.rotate(0.7);
                 break;
             case 2:
                 this.rotate(-1);

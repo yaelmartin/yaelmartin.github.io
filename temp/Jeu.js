@@ -11,8 +11,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 class Jeu extends Scene {
     SetMusic() {
         this.musicAmbiant1_ = new MusicPlayer("m_ambiant1", true);
+        this.musicStart_ = new MusicPlayer("m_start", true);
         this.musicDead_ = new MusicPlayer("m_dead", false);
         this.musicWin_ = new MusicPlayer("m_win", false);
+        this.musicEnding_ = new MusicPlayer("m_ending", true);
+        this.musicDanger_ = new MusicPlayer("m_danger", true);
         this.sfxJump_ = new MusicPlayer("s_jump", false);
         this.sfxWood_ = new MusicPlayer("s_wood", false);
         this.sfxRolling_ = new MusicPlayer("s_rolling", true);
@@ -22,9 +25,49 @@ class Jeu extends Scene {
         this.sfxStormSwapDirection = new MusicPlayer("s_stormswap", false);
         this.sfxFlowerRecolted_ = new MusicPlayer("s_flowerrecolted", false);
     }
+    useMusicLevel() {
+        if (this.rawMap_.music_ == null) {
+            if (this.currentMusicPlayerLevel_ != null) {
+                this.currentMusicPlayerLevel_.volume(1);
+            }
+        }
+        else {
+            if (this.currentMusicName_ != this.rawMap_.music_) {
+                if (this.currentMusicPlayerLevel_ != null) {
+                    this.currentMusicPlayerLevel_.pause();
+                }
+                this.currentMusicName_ = this.rawMap_.music_;
+                switch (this.currentMusicName_) {
+                    case "zen_garden":
+                        this.currentMusicPlayerLevel_ = this.musicStart_;
+                        this.currentMusicPlayerLevel_.volume(1);
+                        this.currentMusicPlayerLevel_.play();
+                        break;
+                    case "punchy":
+                        this.currentMusicPlayerLevel_ = this.musicAmbiant1_;
+                        this.currentMusicPlayerLevel_.volume(1);
+                        this.currentMusicPlayerLevel_.playAt(0);
+                        break;
+                    case "danger":
+                        this.currentMusicPlayerLevel_ = this.musicDanger_;
+                        this.currentMusicPlayerLevel_.volume(1);
+                        this.currentMusicPlayerLevel_.play();
+                        break;
+                    case "ending_scene":
+                        this.currentMusicPlayerLevel_ = this.musicEnding_;
+                        this.currentMusicPlayerLevel_.volume(1);
+                        this.currentMusicPlayerLevel_.play();
+                        break;
+                    default:
+                        console.log("this music isn't valid ! " + this.currentMusicName_);
+                        this.currentMusicPlayerLevel_ = null;
+                        this.currentMusicName_ = null;
+                        break;
+                }
+            }
+        }
+    }
     DevInputSystem() {
-        this.totalDeaths_ = 0;
-        this.currentLevel_ = 0;
         this.SetMusic();
         this.inputSystem_ = new InputSystem(this);
         this.inputSystem_.startListening();
@@ -39,34 +82,50 @@ class Jeu extends Scene {
         this.background_ = new Sprite(elementBackground);
         this.background_.setXY(0, 0);
         this.appendChild(this.background_);
+        this.resetWholeGameValues();
         this.loadLevel(this.currentLevel_);
         this.loopFrame();
+    }
+    resetWholeGameValues() {
+        this.currentMusicName_ = null;
+        if (this.currentMusicPlayerLevel_ != null) {
+            this.currentMusicPlayerLevel_.pause();
+        }
+        this.currentMusicPlayerLevel_ = null;
+        this.gameFinished_ = false;
+        this.nbFramesPerLevel = [];
+        this.idCurrentFrameLevel_ = 0;
+        this.currentLevel_ = 0;
+        this.totalDeaths_ = 0;
+        this.currentLevel_ = 0;
     }
     loadLevel(level) {
         if (this.currentLevel_ > this.levelLists_.length - 1) {
             this.loadEnding();
         }
         else {
-            this.musicAmbiant1_.volume(1);
-            this.replayCorrectedInputs_ = new Array();
-            this.currentBackgroundForeground_ = 0;
-            this.levelFinished_ = false;
-            this.nbFlowersRecolted_ = 0;
-            this.levelFinished_ = false;
-            this.portalIsOpened_ = false;
-            this.musicAmbiant1_.play();
-            this.damageVelocity_ = 0;
-            this.playerIsAlive_ = true;
-            this.userInterface_.setVisualLife(this.playerLife_);
+            this.resetVarForLevelLoad();
             this.rawMap_ = new RawMap(this.levelLists_[this.currentLevel_]);
+            this.useMusicLevel();
             this.loadMapAndInitializeLogic();
         }
+    }
+    resetVarForLevelLoad() {
+        this.replayCorrectedInputs_ = new Array();
+        this.currentBackgroundForeground_ = 0;
+        this.levelFinished_ = false;
+        this.nbFlowersRecolted_ = 0;
+        this.levelFinished_ = false;
+        this.portalIsOpened_ = false;
+        this.damageVelocity_ = 0;
+        this.playerIsAlive_ = true;
+        this.userInterface_.setVisualLife(this.playerLife_);
     }
     loopFrame() {
         this.loopOK = setInterval(() => {
             if (!this.levelFinished_) {
-                this.idCurrentFrame_ = this.idCurrentFrame_ + 1;
-                this.userInterface_.setVisualTimer((this.idCurrentFrame_ / 60).toFixed(2) + "s");
+                this.idCurrentFrameLevel_ = this.idCurrentFrameLevel_ + 1;
+                this.userInterface_.setVisualTimer((this.idCurrentFrameLevel_ / 60).toFixed(2) + "s");
                 this.correctedInputs_ = this.inputSystem_.getCorrectedArrowsInputs();
                 this.replayCorrectedInputs_.push(this.correctedInputs_);
                 this.player_.move();
@@ -85,8 +144,17 @@ class Jeu extends Scene {
                 this.inputSystem_.applyReleasedKey();
             }
             else {
-                if (!this.gameFinished_) {
+                if (this.gameFinished_) {
+                    console.log("Restarting game");
+                    this.userInterface_.setEndingUI(false);
+                    this.clearLevel();
+                    this.resetWholeGameValues();
+                    this.loadLevel(this.currentLevel_);
+                }
+                else {
                     console.log("level finished");
+                    this.nbFramesPerLevel.push(this.idCurrentFrameLevel_);
+                    this.idCurrentFrameLevel_ = 0;
                     this.clearLevel();
                     this.currentLevel_ = this.currentLevel_ + 1;
                     this.loadLevel(this.currentLevel_);
@@ -97,6 +165,11 @@ class Jeu extends Scene {
     loadEnding() {
         this.gameFinished_ = true;
         console.log("GG YOU FINISHED");
+        this.resetVarForLevelLoad();
+        this.rawMap_ = new RawMap("ending_scene");
+        this.useMusicLevel();
+        this.loadMapAndInitializeLogic();
+        this.userInterface_.setEndingUI(true);
     }
     distanceBetweenPoints(x1, y1, x2, y2) {
         return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
@@ -175,12 +248,16 @@ class Jeu extends Scene {
         let safe = this.player_.gridX_ >= this.dangerZone_.gridX_ && this.player_.gridX_ + this.player_.playerGridWidth_ < this.dangerZone_.gridX_ + this.dangerZone_.zoneGridWidth_;
         if (safe) {
             this.sfxStorm_.pause();
-            this.musicAmbiant1_.volume(1);
+            if (this.currentMusicPlayerLevel_ != null) {
+                this.currentMusicPlayerLevel_.volume(1);
+            }
             this.damageVelocity_ = 0;
         }
         else {
             this.sfxStorm_.play();
-            this.musicAmbiant1_.volume(0.3);
+            if (this.currentMusicPlayerLevel_ != null) {
+                this.currentMusicPlayerLevel_.volume(0.3);
+            }
             this.damageVelocity_ = this.damageVelocity_ + 0.0005;
         }
         return (safe);
@@ -202,10 +279,13 @@ class Jeu extends Scene {
     tryActionButton() {
         for (let i = 0; i < this.buttons_.length; i++) {
             let button = this.buttons_[i];
-            if (this.distanceBetweenPoints(this.playerCenterX_, this.playerCenterY_, button.centerGridX_, button.centerGridY_) < 0.7) {
+            if (this.distanceBetweenPoints(this.playerCenterX_, this.playerCenterY_, button.centerGridX_, button.centerGridY_) < 0.8) {
                 button.trySetNewValuesDangerZone();
             }
         }
+    }
+    getCurrentLevel() {
+        return this.currentLevel_;
     }
     setBackground(filepath) {
         if (filepath != null) {
@@ -295,6 +375,7 @@ class Jeu extends Scene {
             let sprite = this.buttons_[i];
             this.removeChild(sprite);
         }
+        this.buttons_ = [];
         for (let i = 0; i < this.flowers_.length; i++) {
             let sprite = this.flowers_[i];
             this.removeChild(sprite);
@@ -355,25 +436,20 @@ class Jeu extends Scene {
     }
     constructor(element) {
         super(element, false);
-        this.currentLevel_ = 0;
-        this.gameFinished_ = false;
-        this.levelLists_ = ["training_move", "training_flowers", "training_zone", "training_wall_jump", "parkour_classic"];
+        this.levelLists_ = ["training_move", "training_flowers", "training_zone", "training_wall_jump", "training_good_luck", "parkour_classic", "painting_level", "painting_zone"];
         this.blocks_ = new Array;
         this.flowers_ = new Array;
         this.buttons_ = new Array;
-        this.idCurrentFrame_ = 0;
         this.tickRate_ = 1000 / 60;
         this.step_ = 32;
     }
     start() {
-        this.listenerKeyStart_ = (event) => {
-            if (event.key === "ArrowUp" || event.key === "Up") {
-                console.log("Up key is pressed");
-                document.removeEventListener("keydown", this.listenerKeyStart_);
-                this.DevInputSystem();
-            }
+        this.listenerStartGame_ = (event) => {
+            document.removeEventListener("click", this.listenerStartGame_);
+            this.toggleFullscreen(event);
+            this.DevInputSystem();
         };
-        document.addEventListener("keydown", this.listenerKeyStart_);
+        document.addEventListener("click", this.listenerStartGame_);
     }
     pause() {
     }

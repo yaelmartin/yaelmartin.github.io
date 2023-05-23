@@ -1,4 +1,8 @@
 
+*{
+  /*box-sizing: border-box;*/
+}
+
 @font-face {
   font-family: 'pixel';
   src: url('font/pixel.ttf') format('truetype');
@@ -33,9 +37,9 @@ body {
 
 #fullscreen {
  position: absolute;
- right: 10px;
- bottom: 10px;
- width: 2em;
+ right: 23px;
+ bottom: 20px;
+ width: 1.2em;
  height: 1.2em;
 
  display: flex;
@@ -43,12 +47,13 @@ body {
  align-items: center;
  justify-content: center;
 
- font-size: 1em;
+ font-size: 1.5em;
 
- background-color: #FFFFFF;
+ background-color: #2D0A0A;
  border: 1px solid #000000;
+ color: white;
  box-shadow: 4px 4px 2px rgba(0,0,0,0.2);
- border-radius: 0.6em;
+ /*border-radius: 0.6em;*/
 
  cursor: pointer;
 

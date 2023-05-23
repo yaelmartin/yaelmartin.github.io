@@ -37,8 +37,6 @@ class Flower extends CenterPositioned {
                 console.log("FLOWER isbackgroundSpecific_ NOT IMPLEMENTED YET");
             }
             else {
-                console.log("old background index = " + this.jeu_.currentBackgroundForeground_);
-                console.log("this.jeu_.possibleBackgrounds_.length " + this.jeu_.possibleBackgrounds_.length);
                 if (this.jeu_.currentBackgroundForeground_ < this.jeu_.possibleBackgrounds_.length - 1) {
                     this.jeu_.currentBackgroundForeground_ = this.jeu_.currentBackgroundForeground_ + 1;
                     this.jeu_.setBackground(this.jeu_.possibleBackgrounds_[this.jeu_.currentBackgroundForeground_]);

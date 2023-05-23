@@ -94,7 +94,7 @@ class RawMap {
         this.portalCenterX_ = 17.5;
         this.portalCenterY_ = 9.5;
         this.backgroundImage_ = ["img/trainingMoveBackground.jpg"];
-        this.foregroundImage_ = ["img/trainingMoveForeGround.png"];
+        this.foregroundImage_ = ["img/trainingMoveForeground.png"];
         this.blocksImgurl_ = "img/blockOrange.png";
         this.music_ = "zen_garden";
     }

@@ -25,36 +25,46 @@ class UserInterface {
         this.jeu_.appendChild(this.lifeCurrentBox_);
         let elementTimerBox = document.createElement("div");
         elementTimerBox.style.zIndex = "" + (this.defaultZIndex_ + 1);
+        elementTimerBox.style.fontFamily = 'pixel';
+        elementTimerBox.style.fontSize = "30px";
+        elementTimerBox.style.textAlign = "right";
         this.timerBox_ = new Sprite(elementTimerBox);
         this.timerBox_.setWidth(150);
         this.timerBox_.setHeight(32);
         this.timerBox_.setXY(640 - 150 - 64, 480 - 16 - 32);
-        this.timerBox_.getElement().innerHTML = "0.s";
-        this.timerBox_.getElement().style.fontFamily = 'pixel';
-        this.timerBox_.getElement().style.fontSize = "30px";
-        this.timerBox_.getElement().style.textAlign = "right";
         this.jeu_.appendChild(this.timerBox_);
         let elementFlowerBox = document.createElement("div");
         elementFlowerBox.style.zIndex = "" + (this.defaultZIndex_ + 1);
         elementFlowerBox.style.lineHeight = "32px";
+        elementFlowerBox.style.fontFamily = 'pixel';
+        elementFlowerBox.style.fontFamily = 'pixel';
+        elementFlowerBox.style.fontSize = "27px";
+        elementFlowerBox.style.textAlign = "left";
         this.flowerBox_ = new Sprite(elementFlowerBox);
         this.flowerBox_.setWidth(350);
         this.flowerBox_.setHeight(32);
         this.flowerBox_.setXY(640 - 350, 384 + 16);
-        this.flowerBox_.getElement().style.fontFamily = 'pixel';
-        this.flowerBox_.getElement().style.fontSize = "27px";
-        this.flowerBox_.getElement().style.textAlign = "left";
         this.jeu_.appendChild(this.flowerBox_);
         let elementEndingScore = document.createElement("div");
         elementEndingScore.style.zIndex = "" + (95);
+        elementEndingScore.style.fontFamily = 'pixel';
+        elementEndingScore.style.color = 'white';
+        elementEndingScore.style.fontSize = "25px";
+        elementEndingScore.style.textAlign = "left";
         this.endingScore_ = new Sprite(elementEndingScore);
         this.endingScore_.setWidth(350);
         this.endingScore_.setHeight(300);
         this.endingScore_.setXY(70, -18);
-        this.endingScore_.getElement().style.fontFamily = 'pixel';
-        this.endingScore_.getElement().style.color = 'white';
-        this.endingScore_.getElement().style.fontSize = "25px";
-        this.endingScore_.getElement().style.textAlign = "left";
+        let elementGlobalRank = document.createElement("div");
+        elementGlobalRank.style.zIndex = "" + (95);
+        elementGlobalRank.style.fontFamily = 'pixel';
+        elementGlobalRank.style.color = 'white';
+        elementGlobalRank.style.fontSize = "20px";
+        elementGlobalRank.style.textAlign = "left";
+        this.globalRank_ = new Sprite(elementGlobalRank);
+        this.globalRank_.setWidth(350);
+        this.globalRank_.setHeight(300);
+        this.globalRank_.setXY(400, 15);
         let elementhideUI = document.createElement("img");
         elementhideUI.style.zIndex = "" + (this.defaultZIndex_ + 10);
         this.hideUIbottom_ = new Sprite(elementhideUI);
@@ -94,12 +104,34 @@ class UserInterface {
             textToShowEnding = textToShowEnding + "</ul><br><br>Echecs: " + this.jeu_.totalDeaths_ + "<br>Score total: <i>" + ((totalGameFrames / 60).toFixed(2)) + "s</i>";
             this.endingScore_.getElement().innerHTML = textToShowEnding;
             this.jeu_.appendChild(this.endingScore_);
+            this.retrieveGlobalRank();
+            this.jeu_.appendChild(this.globalRank_);
             this.jeu_.appendChild(this.hideUIbottom_);
         }
         else {
             this.jeu_.removeChild(this.endingScore_);
             this.endingScore_.getElement().innerHTML = "";
+            this.jeu_.removeChild(this.globalRank_);
+            this.globalRank_.getElement().innerHTML = "";
             this.jeu_.removeChild(this.hideUIbottom_);
         }
+    }
+    retrieveGlobalRank() {
+        let request = new XMLHttpRequest();
+        let parameters = "getScore=1";
+        request.open("get", "http://localhost/sae401/index.php?" + parameters);
+        request.onreadystatechange = () => {
+            if (request.readyState == XMLHttpRequest.DONE && request.status == 200) {
+                const scores = JSON.parse(request.responseText);
+                console.log(scores);
+                let textToShowGlobalScore = "Meilleurs Temps<ul>";
+                scores.forEach(score => {
+                    textToShowGlobalScore = textToShowGlobalScore + "<li><i>" + ((score.score / 60).toFixed(2)) + "s</i> ";
+                });
+                textToShowGlobalScore = textToShowGlobalScore + "<ul>";
+                this.globalRank_.getElement().innerHTML = textToShowGlobalScore;
+            }
+        };
+        request.send();
     }
 }

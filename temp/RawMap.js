@@ -165,7 +165,7 @@ class RawMap {
             ];
         this.flowers_ =
             [
-                [11.5, 6.5, "img/flowerRed.png", true, true, false, null, null]
+                [11.5, 6.5, "img/flowerRed.png", true, false, false, null, null]
             ];
         this.backgroundImage_ = [null];
         this.foregroundImage_ = ["img/trainingZoneForeground0.png"];
@@ -189,7 +189,7 @@ class RawMap {
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
             ];
-        this.playerSpawnX_ = 1.1;
+        this.playerSpawnX_ = 1.15;
         this.playerSpawnY_ = 10;
         this.flowers_ =
             [
@@ -262,7 +262,6 @@ class RawMap {
             ];
         this.playerSpawnX_ = 9.5;
         this.playerSpawnY_ = 9;
-        this.initialLifeAmount_ = 0.5;
         this.safeAreaX_ = 7;
         this.safeAreaY_ = 0;
         this.safeAreaWidth_ = 14;
@@ -285,7 +284,7 @@ class RawMap {
                 [16.5, 2.5, -0.0008, 0.07],
             ];
         this.showBlocks_ = true;
-        this.initialLifeAmount_ = 1;
+        this.initialLifeAmount_ = 0.3;
         this.portalCenterX_ = 10.5;
         this.portalCenterY_ = 1.5;
         this.music_ = "punchy";

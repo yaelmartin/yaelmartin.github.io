@@ -1,5 +1,5 @@
 "use strict";
-class DangerZone extends Animated {
+class DangerZone extends GridPositioned {
     constructor(element, jeu, gridX, gridY, width, height, debugShow, maxVelocityX, accelX) {
         super(element, jeu, gridX, gridY);
         this.vx_ = 0;

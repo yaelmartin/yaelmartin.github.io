@@ -1,5 +1,5 @@
 "use strict";
-class Player extends Animated {
+class Player extends GridPositioned {
     getCollisionsConsole() {
         this.updateGridCollisionCoords();
         console.log(this.CheckCollisionsDown(), this.CheckCollisionsUp(), this.CheckCollisionsLeft(), this.CheckCollisionsRight());

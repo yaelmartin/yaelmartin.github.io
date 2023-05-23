@@ -13,7 +13,6 @@ class Jeu extends Scene {
         this.musicAmbiant1_ = new MusicPlayer("m_ambiant1", true);
         this.musicStart_ = new MusicPlayer("m_start", true);
         this.musicDead_ = new MusicPlayer("m_dead", false);
-        this.musicWin_ = new MusicPlayer("m_win", false);
         this.musicEnding_ = new MusicPlayer("m_ending", true);
         this.musicDanger_ = new MusicPlayer("m_danger", true);
         this.sfxJump_ = new MusicPlayer("s_jump", false);
@@ -67,7 +66,7 @@ class Jeu extends Scene {
             }
         }
     }
-    DevInputSystem() {
+    trulyStartGame() {
         this.SetMusic();
         this.inputSystem_ = new InputSystem(this);
         this.inputSystem_.startListening();
@@ -164,7 +163,8 @@ class Jeu extends Scene {
     }
     loadEnding() {
         this.gameFinished_ = true;
-        console.log("GG YOU FINISHED");
+        console.log("Game Finished");
+        this.uploadTimeServer();
         this.resetVarForLevelLoad();
         this.rawMap_ = new RawMap("ending_scene");
         this.useMusicLevel();
@@ -179,7 +179,7 @@ class Jeu extends Scene {
     }
     chechIfPlayerIsStillAlive() {
         this.userInterface_.setVisualLife(this.playerLife_);
-        if (this.playerLife_ < 0) {
+        if (this.playerLife_ < 0 && !this.godEnabled_) {
             this.totalDeaths_ = this.totalDeaths_ + 1;
             console.log("player died");
             this.playerIsAlive_ = false;
@@ -390,6 +390,16 @@ class Jeu extends Scene {
         this.portal_.clearPortal();
         this.portal_ = null;
     }
+    cheatForceLevelLoad(level) {
+        this.currentLevel_ = level - 1;
+        this.levelFinished_ = true;
+    }
+    cheatGod() {
+        this.godEnabled_ = (!this.godEnabled_);
+    }
+    cheatSkipLevel() {
+        this.levelFinished_ = true;
+    }
     exportReplayInputs() {
         const hexString = this.replayCorrectedInputs_.map(frame => this.convertFrameToHex(frame)).join('');
         const blob = new Blob([hexString], { type: 'text/plain' });
@@ -438,6 +448,7 @@ class Jeu extends Scene {
     }
     constructor(element) {
         super(element, false);
+        this.godEnabled_ = false;
         this.levelLists_ = ["training_move", "training_flowers", "training_zone", "training_wall_jump", "training_good_luck", "parkour_classic", "painting_level", "painting_zone"];
         this.blocks_ = new Array;
         this.flowers_ = new Array;
@@ -448,15 +459,27 @@ class Jeu extends Scene {
     start() {
         this.listenerStartGame_ = (event) => {
             document.removeEventListener("click", this.listenerStartGame_);
-            this.toggleFullscreen(event);
-            this.DevInputSystem();
+            if (document.fullscreenElement == null) {
+                this.toggleFullscreen(event);
+            }
+            this.trulyStartGame();
         };
         document.addEventListener("click", this.listenerStartGame_);
     }
-    pause() {
-    }
-    unpause() {
-    }
-    clean() {
+    uploadTimeServer() {
+        console.log("uploading the score");
+        let totalGameFrames = 0;
+        for (let i = 0; i < this.nbFramesPerLevel.length; i++) {
+            totalGameFrames = totalGameFrames + this.nbFramesPerLevel[i];
+        }
+        let request = new XMLHttpRequest();
+        let parameters = "uploadScore=" + totalGameFrames;
+        request.open("get", "http://localhost/sae401/index.php?" + parameters);
+        request.onreadystatechange = () => {
+            if (request.readyState == XMLHttpRequest.DONE && request.status == 200) {
+                console.log("score uploaded ! " + totalGameFrames);
+            }
+        };
+        request.send();
     }
 }

@@ -174,6 +174,9 @@ class Jeu extends Scene {
     distanceBetweenPoints(x1, y1, x2, y2) {
         return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
     }
+    distanceBetweenPointsIslessThan(x1, y1, x2, y2, value) {
+        return (Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2)) < Math.pow(value, 2);
+    }
     chechIfPlayerIsStillAlive() {
         this.userInterface_.setVisualLife(this.playerLife_);
         if (this.playerLife_ < 0) {
@@ -201,8 +204,7 @@ class Jeu extends Scene {
     }
     updateLevelIsFinished() {
         if (this.portalIsOpened_) {
-            if (this.distanceBetweenPoints(this.playerCenterX_, this.playerCenterY_, this.portal_.centerGridX_, this.portal_.centerGridY_)
-                < 0.8) {
+            if (this.distanceBetweenPointsIslessThan(this.playerCenterX_, this.playerCenterY_, this.portal_.centerGridX_, this.portal_.centerGridY_, 0.8)) {
                 this.sfxPortalTeleport_.play();
                 this.levelFinished_ = true;
             }
@@ -266,7 +268,7 @@ class Jeu extends Scene {
         for (let i = 0; i < this.flowers_.length; i++) {
             let flower = this.flowers_[i];
             if (!flower.hasBeenRecolted) {
-                if (this.distanceBetweenPoints(this.playerCenterX_, this.playerCenterY_, flower.centerGridX_, flower.centerGridY_) < 0.8) {
+                if (this.distanceBetweenPointsIslessThan(this.playerCenterX_, this.playerCenterY_, flower.centerGridX_, flower.centerGridY_, 0.8)) {
                     flower.catch();
                     this.nbFlowersRecolted_ = this.nbFlowersRecolted_ + 1;
                     let percentFlower = this.nbFlowersRecolted_ / this.flowersToOpenPortal_;
@@ -279,7 +281,7 @@ class Jeu extends Scene {
     tryActionButton() {
         for (let i = 0; i < this.buttons_.length; i++) {
             let button = this.buttons_[i];
-            if (this.distanceBetweenPoints(this.playerCenterX_, this.playerCenterY_, button.centerGridX_, button.centerGridY_) < 0.8) {
+            if (this.distanceBetweenPointsIslessThan(this.playerCenterX_, this.playerCenterY_, button.centerGridX_, button.centerGridY_, 0.8)) {
                 button.trySetNewValuesDangerZone();
             }
         }
